@@ -1,0 +1,155 @@
+<html>
+<head>
+	<title>Will</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" type="image/x-icon" href="http://superdupergc.com/press/black_ice/images/blackicelogo.png" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Cabin|Rubik|Orbitron" rel="stylesheet">
+	<script>
+		var log = console.log.bind(console)
+	</script>
+	<style>
+		/* planarfeeler */
+		::-webkit-scrollbar {
+			display: none;
+		}
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+		body {
+			width: 70%;
+			height: 100%;
+			background-color: black;
+			color: green;
+			margin: auto;
+			background-image: url(https://pbs.twimg.com/profile_banners/42431027/1407184527/1500x500);
+			/*background-image: url(http://wallpapercave.com/wp/qjUnoPJ.jpg);*/
+			/*background-image: url(https://i.ytimg.com/vi/ViTYnKiH5S8/maxresdefault.jpg);*/
+			/*background-image: url(http://wallpapercave.com/wp/B6OVetv.jpg);*/
+		}
+		.overlay {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+
+		}
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		.HolyGrail {
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
+		}
+		.HolyGrail-body {
+			display: flex;
+			flex: 1;
+		}
+		a, a:hover {
+			color: green;
+			text-decoration: none;
+		}
+		a:hover {
+			color: #33a033;
+		}
+		@media (min-width: 768px) {
+			.HolyGrail-body {
+				flex-direction: row;
+				flex: 1;
+			}
+			.HolyGrail-content {
+				flex: 1;
+			}
+			.HolyGrail-nav, .HolyGrail-aside {
+				flex: 0 0 12em;
+			}
+		}
+		header, nav, article, aside, footer {
+			background-color: rgba(199, 199, 199, 0.85);
+			margin: 10px;
+			padding: 10px;
+			border-radius: 10px;
+			/*border: 5px dashed black;*/
+		}
+		header, footer {
+			text-align: center;
+			font-family: orbitron;
+		}
+		nav, content, aside {
+			font-family: rubik;
+		}
+/*		.page-header h1, nav ul, .title, section, .page-footer h6 {
+			background-color: rgba(50, 50, 50, 0.85);
+			padding: 10px;
+			border-radius: 10px;
+		}*/
+	</style>
+</head>
+<body>
+
+	<header class="page-header"><h1>William Francis</h1>
+		<small><!-- lives here. -->
+			This is my private part of the internet.</small></header>
+			<div class="HolyGrail-body">
+				<nav class="HolyGrail-nav">
+					<ul>
+						<li><a href='https://github.com/fallenreaper/'>Github <i class='fa fa-github'></i></a></li>
+						<li><a href='http://www.fallenreaper.com/OCS/'>OCS</a></li>
+						<li><a href='http://www.fallenreaper.com/BeerMe/'>BeerMe</a></li>
+						<li><a href='http://www.fallenreaper.com/BandofBrothers.html'>Band of Brothers</a></li>
+					</ul>
+				</nav>
+				<content class="HolyGrail-content">
+					<article>
+						<h3 class='title'>{{title}}</h3>
+						<hr>
+						<h6><small>{{timestamp}}</small></h6>
+						<section class='content'>{{content}}</section>
+					</article>
+					<article>
+						<h3 class='title'>{{title}}</h3>
+						<hr>
+						<h6><small>{{timestamp}}</small></h6>
+						<section class='content'>{{content}}</section>
+					</article>
+					<article>
+						<h3 class='title'>{{title}}</h3>
+						<hr>
+						<h6><small>{{timestamp}}</small></h6>
+						<section class='content'>{{content}}</section>
+					</article>
+
+
+
+				</content>
+				<aside class="HolyGrail-aside">
+					<a class="twitter-follow-button"
+					data-size="large"
+					href="https://twitter.com/FallenReaper">
+					Follow @FallenReaper
+					</a>
+					<a class="twitter-timeline"
+					href="https://twitter.com/Fallenreaper"
+					data-tweet-limit="3"
+					data-chrome='noheader nofooter noborders noscrollbar'
+					data-theme='dark'
+					data-link-color='#008800'
+					data-border-color='#008800'
+					>Tweets by Fallenreaper</a>
+					<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</aside>
+			</div>
+			<footer class='page-footer'>
+				<h6>&copy; 2017 Fallen Reaper</h6>
+			</footer>
+		</body>
+		</html>
