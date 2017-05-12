@@ -1,0 +1,311 @@
+<html>
+<head>
+<title>Will</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+
+<link rel="shortcut icon" type="image/x-icon" href="http://superdupergc.com/press/black_ice/images/blackicelogo.png" />
+<link rel="shortcut icon" type="image/x-icon" href="http://www.matthewmorrone.com/psi.ico" />
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.20/autosize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Cabin|Rubik|Orbitron" rel="stylesheet">
+<script>
+	log = console.log.bind(console)
+</script>
+<style>
+	/* planarfeeler */
+	::-webkit-scrollbar {
+		display: none;
+	}
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+	body {
+		width: 70%;
+		height: 100%;
+		background-color: black;
+		color: green;
+		margin: auto;
+		background-image: url(https://pbs.twimg.com/profile_banners/42431027/1407184527/1500x500);
+		/*background-image: url(http://wallpapercave.com/wp/qjUnoPJ.jpg);*/
+		/*background-image: url(https://i.ytimg.com/vi/ViTYnKiH5S8/maxresdefault.jpg);*/
+		/*background-image: url(http://wallpapercave.com/wp/B6OVetv.jpg);*/
+		background-attachment: /*scroll*/ fixed/* local*/;
+		background-position: center;
+		/*background-position: 25% 75%;*/
+		background-repeat: no-repeat;
+		/*background-repeat: round;*/
+		background-size: contain /*cover*/;
+	}
+	.overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+
+	}
+	table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	.HolyGrail {
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+	.HolyGrail-body {
+		display: flex;
+		flex: 1;
+	}
+	a, a:hover {
+		color: green;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #33a033;
+	}
+	@media (min-width: 768px) {
+		.HolyGrail-body {
+			flex-direction: row;
+			flex: 1;
+		}
+		.HolyGrail-content {
+			flex: 1;
+		}
+		.HolyGrail-nav, .HolyGrail-aside {
+			flex: 0 0 12em;
+		}
+	}
+	header, nav, article, aside, footer {
+		background-color: rgba(199, 199, 199, 0.85);
+		margin: 10px;
+		padding: 10px;
+		border-radius: 10px;
+		/*border: 5px dashed black;*/
+	}
+	header, footer {
+		text-align: center;
+		font-family: orbitron;
+	}
+	nav, content, aside {
+		font-family: rubik;
+	}
+/*		.page-header h1, nav ul, .title, section, .page-footer h6 {
+		background-color: rgba(50, 50, 50, 0.85);
+		padding: 10px;
+		border-radius: 10px;
+	}*/
+
+	.ProfileAvatar {
+		background: #fff;
+		border: 5px solid #fff;
+		border-radius: 12px;
+		box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+		height: 160px;
+		width: 160px;
+		position: relative;
+	}
+	.ProfileAvatar-image {
+		border-radius: 8px;
+		height: 150px;
+		width: 150px;
+	}
+	.post-new {
+		width: 100%;
+	}
+	.post-menu {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	.post-title {
+		flex: 2;
+	}
+	.post-edit, .post-delete {
+		flex: 0;
+		height: 30px;
+	}
+	[contenteditable=true]:empty:before{
+		content: attr(placeholder);
+		color: gray;
+		display: block;
+	}
+	#template {
+		display: none;
+	}
+	.fa-circle-o {
+		margin-left: 10px;
+		margin-right: 3px;
+		margin-top: 3px;
+	}
+	.post-raw {
+		width: 100%;
+		display: none;
+	}
+	textarea {
+		outline: none;
+		resize: vertical;
+		/*resize: none;*/
+	}
+</style>
+<script>
+window['moment-range'].extendMoment(moment);
+function newpost(entry) {
+	log(entry)
+	var $article = $('#template').clone().removeAttr('id')
+	$article.attr('name', entry.name)
+	$article.find('.post-raw').html(entry.content)
+	autosize($article.find('.post-raw'))
+	autosize.update($article.find('.post-raw'))
+	$article.find('.post-title').html(marked(entry.content.split('\n')[0]))
+	$article.find('.post-content').html(marked(entry.content.split('\n').slice(1).join('\n')))
+	$article.find('.post-created').html(moment(entry.created).format("YYYY-MM-DD HH:mm:ss"))
+	$('#template').before($article)
+	$(this).blur()
+
+
+	$('.blog-post').sort(function(a, b) {
+		a = moment($(a).find('.post-created').text())
+		b = moment($(b).find('.post-created').text())
+	    if (a.isBefore(b)) {
+	    	return 1
+	    }
+	    if (a.isAfter(b)) {
+	    	return -1
+	    }
+	    return 0
+	}).appendTo('content')
+	$('content').append($('article').eq(0))
+}
+$(document).on('click', '.post-edit', function() {
+	var $article = $(this).parents('article')
+	if ($article.attr('editable') === 'true') {
+		$article.attr('editable', 'false')
+		$article.find('.post-raw').css('display', 'none')
+		$article.find('.post-content').css('display', 'block')
+
+		$.post('api.php', {
+			mode: 'write',
+			handle: '/will/posts/'+($article.attr('name') || $article.find('.post-title').text()),
+			content: $article.find('.post-raw').val()
+		}, function(d) {
+			$article.find('.post-title').html(marked($article.find('.post-raw').val().split('\n')[0]))
+			$article.find('.post-content').html(marked($article.find('.post-raw').val().split('\n').slice(1).join('\n')))
+		}, 'text')
+
+	}
+	else {
+		$article.attr('editable', 'true')
+		$article.find('.post-raw').css('display', 'block')
+		autosize($article.find('.post-raw'))
+		autosize.update($article.find('.post-raw'))
+		$article.find('.post-content').css('display', 'none')
+	}
+})
+$(document).on('click', '.post-delete', function() {
+	var $article = $(this).parents('article')
+
+	if (window.confirm("Really delete?")) {
+
+
+		$.post('api.php', {
+			mode: 'rm',
+			handle: '/will/posts/'+($article.attr('name') || $article.find('.post-title').text())
+		}, function(d) {
+			$article.remove()
+		}, 'text')
+	}
+})
+$(function() {
+	$.post('api.php', {
+		mode: 'posts',
+		handle: '/will/posts',
+		dataType: 'json'
+	}, function(d) {
+		d.map(e => newpost(e))
+	}, 'json')
+	$('.post-new').click(function() {
+		var $article = $('#template').clone().removeAttr('id')
+		$article.find('.post-created').html(moment().format("dddd, MMMM Do YYYY, HH:mm:ss A"))
+		$('.post-new').parent().after($article)
+		$article.find('.post-edit').click()
+		$(this).blur()
+	})
+})
+</script>
+</head>
+<body>
+
+	<header class="page-header">
+		<h1>William Francis</h1>
+		<small><!-- lives here. -->This is my private part of the internet.</small>
+	</header>
+	<div class="HolyGrail-body">
+		<nav class="HolyGrail-nav">
+			<div class="ProfileCanopy-avatar">
+				<div class="ProfileAvatar">
+					<a class="ProfileAvatar-container u-block js-tooltip profile-picture" href="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" data-resolved-url-large="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" data-url="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" target="_blank" rel="noopener" data-original-title="William Francis">
+						<img class="ProfileAvatar-image" src="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p_400x400.jpg" alt="William Francis">
+					</a>
+				</div>
+			</div>
+			<hr>
+			<ul>
+				<li><a href='https://github.com/fallenreaper/'>Github <i class='fa fa-github'></i></a></li>
+				<li><a href='http://www.fallenreaper.com/OCS/'>OCS</a></li>
+				<li><a href='http://www.fallenreaper.com/BeerMe/'>BeerMe</a></li>
+				<li><a href='http://www.fallenreaper.com/BandofBrothers.html'>Band of Brothers</a></li>
+			</ul>
+		</nav>
+		<content class="HolyGrail-content">
+			<article>
+				<button type="button" class="btn btn-success post-new"><i class='fa fa-plus'></i></button>
+			</article>
+			<article id='template' class='blog-post'>
+				<div class='post-menu'>
+					<h3 class='post-title' contenteditable="false" placeholder="Title"></h3>
+					<button type="button" class="post-edit   btn btn-warning"><i class='fa fa-edit'></i></button>
+					<button type="button" class="post-delete btn btn-danger"> <i class='fa fa-minus'></i></button>
+				</div>
+				<hr>
+				<h6><small class='post-created'></small><small class='post-modified'></small><small class='post-published'></small></h6>
+				<textarea class='post-raw'></textarea>
+				<section class='post-content' contenteditable="false" placeholder="Content"></section>
+			</article>
+			<article>
+				<button type="button" class="btn btn-success post-new"><i class='fa fa-plus'></i></button>
+			</article>
+		</content>
+		<aside class="HolyGrail-aside">
+			<a class="twitter-follow-button"
+			data-size="large"
+			href="https://twitter.com/FallenReaper">
+			Follow @FallenReaper
+			</a>
+			<hr>
+			<a class="twitter-timeline"
+			href="https://twitter.com/Fallenreaper"
+			data-tweet-limit="3"
+			data-chrome='noheader nofooter noborders noscrollbar'
+			data-theme='dark'
+			data-link-color='#008800'
+			data-border-color='#008800'
+			>Tweets by Fallenreaper</a>
+			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</aside>
+	</div>
+	<footer class='page-footer'>
+		<h6>&copy; 2017 Fallen Reaper</h6>
+	</footer>
+</body>
+</html>

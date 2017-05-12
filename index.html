@@ -1,12 +1,63 @@
 <html>
 <head>
-<title>Will</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--<meta http-equiv="refresh" content="30">-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will | Will is a modern responsive business and corporate theme that helps you to create a strong–yet beautiful–online presence for your business</title>
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#e1dfdf">
+<!-- <link rel="shortcut icon"   type="image/x-icon" href="/favicon.ico"> -->
+<!-- <link rel="icon"            type="image/x-icon" href="/favicon.ico"> -->
+<!-- <link rel="shortcut icon"   type="image/x-icon" href="http://superdupergc.com/press/black_ice/images/blackicelogo.png" /> -->
+<link rel="shortcut icon"   type="image/x-icon" href="http://www.matthewmorrone.com/psi.ico" />
 
-<link rel="shortcut icon" type="image/x-icon" href="http://superdupergc.com/press/black_ice/images/blackicelogo.png" />
-<link rel="shortcut icon" type="image/x-icon" href="http://www.matthewmorrone.com/psi.ico" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" /> -->
 
+<link rel="stylesheet" href="goran.css">
+<link rel="stylesheet" href="fonts.css">
+<link href="https://fonts.googleapis.com/css?family=Cabin|Rubik|Orbitron" rel="stylesheet">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+<style>
+.hero.with-featured-image {
+    /*background-image: url(img/hero.jpg);*/
+    padding-top: 312px;
+}
+.site-header {
+    margin-bottom: -96px;
+    display: block;
+}
+@media screen and (max-width: 600px) {
+    .demosite-activate {
+        position: absolute;
+    }
+}
+.entry {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.blog-title {
+    text-transform: uppercase;
+}
+.blog-image {
+    float: right;
+}
+.blog-blurb {
+    font-style: italic;
+}
+hr {
+    background-color: black !important;
+    color: black !important;
+}
+</style>
+<script>
+    log = console.log.bind(console)
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
@@ -14,299 +65,204 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.js"></script>
-<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.4/showdown.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.20/autosize.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
-<link href="https://fonts.googleapis.com/css?family=Cabin|Rubik|Orbitron" rel="stylesheet">
+
 <script>
-	log = console.log.bind(console)
-</script>
-<style>
-	/* planarfeeler */
-	::-webkit-scrollbar {
-		display: none;
-	}
-	* {
-		margin: 0px;
-		padding: 0px;
-	}
-	body {
-		width: 70%;
-		height: 100%;
-		background-color: black;
-		color: green;
-		margin: auto;
-		background-image: url(https://pbs.twimg.com/profile_banners/42431027/1407184527/1500x500);
-		/*background-image: url(http://wallpapercave.com/wp/qjUnoPJ.jpg);*/
-		/*background-image: url(https://i.ytimg.com/vi/ViTYnKiH5S8/maxresdefault.jpg);*/
-		/*background-image: url(http://wallpapercave.com/wp/B6OVetv.jpg);*/
-		background-attachment: /*scroll*/ fixed/* local*/;
-		background-position: center;
-		/*background-position: 25% 75%;*/
-		background-repeat: no-repeat;
-		/*background-repeat: round;*/
-		background-size: contain /*cover*/;
-	}
-	.overlay {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-
-	}
-	table, th, td {
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	.HolyGrail {
-		display: flex;
-		min-height: 100vh;
-		flex-direction: column;
-	}
-	.HolyGrail-body {
-		display: flex;
-		flex: 1;
-	}
-	a, a:hover {
-		color: green;
-		text-decoration: none;
-	}
-	a:hover {
-		color: #33a033;
-	}
-	@media (min-width: 768px) {
-		.HolyGrail-body {
-			flex-direction: row;
-			flex: 1;
-		}
-		.HolyGrail-content {
-			flex: 1;
-		}
-		.HolyGrail-nav, .HolyGrail-aside {
-			flex: 0 0 12em;
-		}
-	}
-	header, nav, article, aside, footer {
-		background-color: rgba(199, 199, 199, 0.85);
-		margin: 10px;
-		padding: 10px;
-		border-radius: 10px;
-		/*border: 5px dashed black;*/
-	}
-	header, footer {
-		text-align: center;
-		font-family: orbitron;
-	}
-	nav, content, aside {
-		font-family: rubik;
-	}
-/*		.page-header h1, nav ul, .title, section, .page-footer h6 {
-		background-color: rgba(50, 50, 50, 0.85);
-		padding: 10px;
-		border-radius: 10px;
-	}*/
-
-	.ProfileAvatar {
-		background: #fff;
-		border: 5px solid #fff;
-		border-radius: 12px;
-		box-shadow: 0 1px 1px rgba(136,153,166,0.15);
-		height: 160px;
-		width: 160px;
-		position: relative;
-	}
-	.ProfileAvatar-image {
-		border-radius: 8px;
-		height: 150px;
-		width: 150px;
-	}
-	.post-new {
-		width: 100%;
-	}
-	.post-menu {
-		display: flex;
-		flex-flow: row nowrap;
-	}
-	.post-title {
-		flex: 2;
-	}
-	.post-edit, .post-delete {
-		flex: 0;
-		height: 30px;
-	}
-	[contenteditable=true]:empty:before{
-		content: attr(placeholder);
-		color: gray;
-		display: block;
-	}
-	#template {
-		display: none;
-	}
-	.fa-circle-o {
-		margin-left: 10px;
-		margin-right: 3px;
-		margin-top: 3px;
-	}
-	.post-raw {
-		width: 100%;
-		display: none;
-	}
-	textarea {
-		outline: none;
-		resize: vertical;
-		/*resize: none;*/
-	}
-</style>
-<script>
-window['moment-range'].extendMoment(moment);
-function newpost(entry) {
-	log(entry)
-	var $article = $('#template').clone().removeAttr('id')
-	$article.attr('name', entry.name)
-	$article.find('.post-raw').html(entry.content)
-	autosize($article.find('.post-raw'))
-	autosize.update($article.find('.post-raw'))
-	$article.find('.post-title').html(marked(entry.content.split('\n')[0]))
-	$article.find('.post-content').html(marked(entry.content.split('\n').slice(1).join('\n')))
-	$article.find('.post-created').html(moment(entry.created).format("YYYY-MM-DD HH:mm:ss"))
-	$('#template').before($article)
-	$(this).blur()
-
-
-	$('.blog-post').sort(function(a, b) {
-		a = moment($(a).find('.post-created').text())
-		b = moment($(b).find('.post-created').text())
-	    if (a.isBefore(b)) {
-	    	return 1
-	    }
-	    if (a.isAfter(b)) {
-	    	return -1
-	    }
-	    return 0
-	}).appendTo('content')
-	$('content').append($('article').eq(0))
+log(window.location)
+function blogEntry(mode) {
+    $.post(window.location.origin+'/will/server.php', {mode: mode}, function(entry) {
+        entry = JSON.parse(entry)
+        log(entry)
+        $('.blog-title').html(entry.title)
+        $('.blog-id').html(entry.id)
+        $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY'))
+        $('.blog-created').attr('href', window.location.href)
+        $('.blog-modified').html(entry.modified)
+        $('.blog-image').attr('src', entry.image)
+        $('.blog-blurb').html(entry.blurb)
+        $('.blog-content').html(entry.content)
+    }, 'text')
 }
-$(document).on('click', '.post-edit', function() {
-	var $article = $(this).parents('article')
-	if ($article.attr('editable') === 'true') {
-		$article.attr('editable', 'false')
-		$article.find('.post-raw').css('display', 'none')
-		$article.find('.post-content').css('display', 'block')
-
-		$.post('api.php', {
-			mode: 'write',
-			handle: '/will/posts/'+($article.attr('name') || $article.find('.post-title').text()),
-			content: $article.find('.post-raw').val()
-		}, function(d) {
-			$article.find('.post-title').html(marked($article.find('.post-raw').val().split('\n')[0]))
-			$article.find('.post-content').html(marked($article.find('.post-raw').val().split('\n').slice(1).join('\n')))
-		}, 'text')
-
-	}
-	else {
-		$article.attr('editable', 'true')
-		$article.find('.post-raw').css('display', 'block')
-		autosize($article.find('.post-raw'))
-		autosize.update($article.find('.post-raw'))
-		$article.find('.post-content').css('display', 'none')
-	}
-})
-$(document).on('click', '.post-delete', function() {
-	var $article = $(this).parents('article')
-
-	if (window.confirm("Really delete?")) {
-
-
-		$.post('api.php', {
-			mode: 'rm',
-			handle: '/will/posts/'+($article.attr('name') || $article.find('.post-title').text())
-		}, function(d) {
-			$article.remove()
-		}, 'text')
-	}
+$(document).on('click', 'a', function(e) {
+    e.preventDefault()
+    window.history.pushState('Object', 'Title', $(this).attr('href'))
+    blogEntry($(this).attr('href').split('/').pop())
 })
 $(function() {
-	$.post('api.php', {
-		mode: 'posts',
-		handle: '/will/posts',
-		dataType: 'json'
-	}, function(d) {
-		d.map(e => newpost(e))
-	}, 'json')
-	$('.post-new').click(function() {
-		var $article = $('#template').clone().removeAttr('id')
-		$article.find('.post-created').html(moment().format("dddd, MMMM Do YYYY, HH:mm:ss A"))
-		$('.post-new').parent().after($article)
-		$article.find('.post-edit').click()
-		$(this).blur()
-	})
+    if (window.location.search) {
+        blogEntry(window.location.href.split('/').pop())
+    }
+    $.post('server.php', {mode: 'all'}, function(posts) {
+        posts.forEach(function(entry) {
+            entry = entry[0]
+            log(entry)
+            var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+
+            $article.find('.entry-title a').html(entry.title)
+            $article.find('.post-thumbnail img').attr('src', entry.image)
+            $article.find('.entry-summary p:eq(0)').html(entry.blurb)
+            if (window.location.host === 'localhost') {
+                $article.find('a').attr('href', window.location.origin+'/will/?blog/'+entry.id)
+            }
+            else {
+                $article.find('a').attr('href', window.location.origin+'/blog/'+entry.id)
+            }
+
+
+            $('.featured-page-wrapper').append($article)
+        })
+
+    }, 'json')
 })
+
 </script>
 </head>
-<body>
 
-	<header class="page-header">
-		<h1>William Francis</h1>
-		<small><!-- lives here. -->This is my private part of the internet.</small>
-	</header>
-	<div class="HolyGrail-body">
-		<nav class="HolyGrail-nav">
-			<div class="ProfileCanopy-avatar">
-				<div class="ProfileAvatar">
-					<a class="ProfileAvatar-container u-block js-tooltip profile-picture" href="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" data-resolved-url-large="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" data-url="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p.jpg" target="_blank" rel="noopener" data-original-title="William Francis">
-						<img class="ProfileAvatar-image" src="https://pbs.twimg.com/profile_images/796692170140958720/SS2Ujx0p_400x400.jpg" alt="William Francis">
-					</a>
-				</div>
-			</div>
-			<hr>
-			<ul>
-				<li><a href='https://github.com/fallenreaper/'>Github <i class='fa fa-github'></i></a></li>
-				<li><a href='http://www.fallenreaper.com/OCS/'>OCS</a></li>
-				<li><a href='http://www.fallenreaper.com/BeerMe/'>BeerMe</a></li>
-				<li><a href='http://www.fallenreaper.com/BandofBrothers.html'>Band of Brothers</a></li>
-			</ul>
-		</nav>
-		<content class="HolyGrail-content">
-			<article>
-				<button type="button" class="btn btn-success post-new"><i class='fa fa-plus'></i></button>
-			</article>
-			<article id='template' class='blog-post'>
-				<div class='post-menu'>
-					<h3 class='post-title' contenteditable="false" placeholder="Title"></h3>
-					<button type="button" class="post-edit   btn btn-warning"><i class='fa fa-edit'></i></button>
-					<button type="button" class="post-delete btn btn-danger"> <i class='fa fa-minus'></i></button>
-				</div>
-				<hr>
-				<h6><small class='post-created'></small><small class='post-modified'></small><small class='post-published'></small></h6>
-				<textarea class='post-raw'></textarea>
-				<section class='post-content' contenteditable="false" placeholder="Content"></section>
-			</article>
-			<article>
-				<button type="button" class="btn btn-success post-new"><i class='fa fa-plus'></i></button>
-			</article>
-		</content>
-		<aside class="HolyGrail-aside">
-			<a class="twitter-follow-button"
-			data-size="large"
-			href="https://twitter.com/FallenReaper">
-			Follow @FallenReaper
-			</a>
-			<hr>
-			<a class="twitter-timeline"
-			href="https://twitter.com/Fallenreaper"
-			data-tweet-limit="3"
-			data-chrome='noheader nofooter noborders noscrollbar'
-			data-theme='dark'
-			data-link-color='#008800'
-			data-border-color='#008800'
-			>Tweets by Fallenreaper</a>
-			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-		</aside>
-	</div>
-	<footer class='page-footer'>
-		<h6>&copy; 2017 Fallen Reaper</h6>
-	</footer>
+<body class="hero-image">
+<div class="site">
+    <header class="site-header">
+        <div class="site-top-content">Phone: 412 555 1234</div>
+        <div class="site-branding">
+            <h1 class="site-title"><a href="https://www.fallenreaper.com/">Will</a></h1>
+        </div>
+        <nav class="main-navigation">
+            <ul id="menu-main">
+                <!-- <li><a href="https://www.fallenreaper.com/">Home</a></li> -->
+                <!-- <li><a href="https://www.fallenreaper.com/blog/">Blog</a></li> -->
+<!--                 <li class="menu-item menu-item-has-children">
+                    <a href="https://www.fallenreaper.com/page-templates/">Page Templates<button class="dropdown-toggle"></button></a>
+                    <ul class="sub-menu">
+                        <li><a href="https://www.fallenreaper.com/page-templates/default-page/">Default Page</a></li>
+                        <li><a href="https://www.fallenreaper.com/page-templates/alternate-sidebar-page/">Alternate Sidebar Page</a></li>
+                        <li><a href="https://www.fallenreaper.com/page-templates/full-width-page/">Full Width Page</a></li>
+                        <li><a href="https://www.fallenreaper.com/page-templates/grid-page/">Grid Page</a></li>
+                    </ul>
+                </li> -->
+            </ul>
+        </nav>
+    </header>
+    <div class="site-content">
+        <div class="hero">
+            <article>
+
+                <div class="entry">
+
+                    <h1 class='blog-title'></h1>
+                    <h4 class='blog-blurb'></h4>
+                    <span class='timestamp posted-on'>Posted on <a href='' class='blog-created'></a></span>
+                    <div class='blog-modified' hidden></div>
+                    <!-- <img class='blog-image' /> -->
+                    <hr>
+                    <div class='blog-content'>
+
+
+                    </div>
+                </div>
+
+            </article>
+        </div>
+        <div class="featured-page-area">
+            <div class="featured-page" id='template' hidden>
+                <article class="hentry">
+                    <a class="post-thumbnail" href=""><img width="314" height="228" src=""></a>
+                    <header><h1 class="entry-title"><a href=""></a></h1></header>
+                    <div class="entry-summary">
+                        <p></p>
+                        <p><a class="button more-link" href="">Read more</a></p>
+                    </div>
+                </article>
+            </div>
+            <div class="featured-page-wrapper clear">
+
+
+            </div>
+        </div>
+<!--         <div class="front-page-widget-area">
+            <div class="front-page-widget-wrapper clear">
+                <div class="front-page-widget">
+                    <aside class="">
+                        <h2 class="widget-title">Front Page Widgets</h2>
+                        <div class="textwidget">
+                            <p>This area of your home page is configured by going to Dashboard → Appearance → Widgets and adding widgets in the Front Page widget areas.</p>
+                        </div>
+                    </aside>
+                </div>
+                <div class="front-page-widget">
+                    <aside>
+                        <h2 class="widget-title">Custom Page Templates</h2>
+                        <div class="textwidget">
+                            <p>Will has four custom page templates that are great for business and corporate websites:</p>
+                            <ul>
+                                <li><a href="https://www.fallenreaper.com/">Front Page Template</a></li>
+                                <li><a href="https://www.fallenreaper.com/page-templates/full-width-page/">Full Width Page Template</a></li>
+                                <li><a href="https://www.fallenreaper.com/page-templates/grid-page/">Grid Page Template</a></li>
+                                <li><a href="https://www.fallenreaper.com/page-templates/alternate-sidebar-page/">Alternate Sidebar Page Template</a></li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+                <div class="front-page-widget">
+                    <aside class="widget_recent_entries">
+                        <h2 class="widget-title">Recent News</h2>
+                        <ul>
+                            <li><a href="https://www.fallenreaper.com/2014/07/30/new-identity/">New identity</a><span class="post-date">July 30, 2014</span></li>
+                            <li><a href="https://www.fallenreaper.com/2014/07/22/will-is-taking-the-day-off/">Will is taking the day&nbsp;off</a><span class="post-date">July 22, 2014</span></li>
+                            <li><a href="https://www.fallenreaper.com/2014/07/21/a-short-post/">A Short Post</a><span class="post-date">July 21, 2014</span></li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div> -->
+<!--     <div class="footer-widget-area">
+        <div class="footer-widget-wrapper clear">
+            <div class="footer-widget">
+                <aside class="widget_nav_menu">
+                    <h2 class="widget-title">Pages</h2>
+                    <div>
+                        <ul id="menu-elements" class="menu">
+                            <li><a href="https://www.fallenreaper.com/html-elements/">HTML Elements</a></li>
+                            <li><a href="https://www.fallenreaper.com/image-alignment-and-styles/">Image Alignment and Styles</a></li>
+                            <li><a href="https://www.fallenreaper.com/readability/">Readability</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+            <div class="footer-widget">
+                <aside>
+                    <h2 class="widget-title">Responsive Design</h2>
+                    <div>
+                        <p>Will's layout adjusts itself depending on the device you are using. This means your site will look good not only on laptop browsers, but also on devices with smaller screens, such as the iPad and the iPhone.</p>
+                    </div>
+                </aside>
+            </div>
+            <div class="footer-widget">
+                <aside class="widget_nav_menu">
+                    <h2 class="widget-title">Follow Me</h2>
+                    <div>
+                        <ul id="menu-social" class="menu">
+                            <li><a href="http://facebook.com/william.francis.98">Facebook</a></li>
+                            <li><a href="http://twitter.com/fallenreaper">Twitter</a></li>
+                            <li><a href="http://github.com/">Github</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div> -->
+    <footer class="site-footer">
+        <nav class="footer-navigation">
+            <div>
+                <ul>
+                    <li><a href="https://www.fallenreaper.com/blog/">Blog</a></li>
+                    <li><a href="https://www.fallenreaper.com/about-us/">About Me</a></li>
+                    <li><a href="https://www.fallenreaper.com/contact-us/">Contact Me</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="site-info">&copy; 2017 A Fallen Reaper Site</div>
+    </footer>
+</div>
 </body>
 </html>

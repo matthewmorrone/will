@@ -3845,9 +3845,9 @@ div#jp-relatedposts {
 	}
 	.hero .hentry,
 	.hero-wrapper,
-	.no-sidebar-full .content-area {
-		width: 1086px;
-	}
+	// .no-sidebar-full .content-area {
+	// 	width: 1086px;
+	// }
 	.footer-navigation,
 	.footer-navigation + .site-info {
 		width: 507px;
@@ -3884,19 +3884,19 @@ div#jp-relatedposts {
 	.sidebar-left.single:not(.no-sidebar):not(.post-type-archive-jetpack-testimonial) .post-thumbnail {
 		width: 772px;
 	}
-	body.hero-image .hero.with-featured-image,
-	body[class*="front-page"] .hero {
-		padding: 216px 0;
-	}
-	body.hero-image .hero.without-featured-image {
-		padding: 144px 0;
-	}
-	body.hero-image .hero.with-featured-image {
-		padding-top: 312px;
-	}
-	body.hero-image .hero.without-featured-image {
-		padding-top: 240px;
-	}
+	// body.hero-image .hero.with-featured-image,
+	// body[class*="front-page"] .hero {
+	// 	padding: 216px 0;
+	// }
+	// body.hero-image .hero.without-featured-image {
+	// 	padding: 144px 0;
+	// }
+	// body.hero-image .hero.with-featured-image {
+	// 	padding-top: 312px;
+	// }
+	// body.hero-image .hero.without-featured-image {
+	// 	padding-top: 240px;
+	// }
 }
 /*--------------------------------------------------------------
 Comments
