@@ -1,6 +1,7 @@
 <html>
 <head>
 <!--<meta http-equiv="refresh" content="30">-->
+<base href="/will/">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +27,11 @@ log = console.log.bind(console)
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.0/url.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script>
+
+
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=w2gkux7gagnlvx1jmtsi6j4jxhg8aogi6wcv9tfxkihcfz8l"></script>
+
+
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/page.js/1.7.1/page.js"></script> -->
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossroads/0.12.2/crossroads.js"></script> -->
 <!-- <script type="text/javascript" src="https://cdn.rawgit.com/tunnckoCore/gibon/master/dist/gibon.umd.js"></script> -->
@@ -36,20 +42,20 @@ log = console.log.bind(console)
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" id='bootstrap'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.css" />
 
 
 <script type="text/javascript" src="navigo.js"></script>
-
 <script>
 log(window.location)
 String.prototype.capital = function capital() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
-function updateUrlParameter(param, value) {
-    var regExp = new RegExp(param + "(.+?)(&|$)", "g");
-    var newUrl = window.location.href.replace(regExp, param + "=" + value + "$2");
-    window.history.pushState("", "", newUrl);
-}
+// function updateUrlParameter(param, value) {
+//     var regExp = new RegExp(param + "(.+?)(&|$)", "g");
+//     var newUrl = window.location.href.replace(regExp, param + "=" + value + "$2");
+//     window.history.pushState("", "", newUrl);
+// }
 function blogEntry(mode) {
     $.post('server.php', {mode: mode}, function(entry) {
         entry = JSON.parse(entry)
@@ -59,21 +65,16 @@ function blogEntry(mode) {
         $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY'))
         $('.blog-created').attr('href', window.location.href)
         $('.blog-modified').html(entry.modified)
-        $('.blog-image').attr('src', 'localhost/will/'+entry.image)
+        $('.blog-image').attr('src', entry.image)
         $('.blog-blurb').html(entry.blurb)
         $('.blog-content').html(entry.content)
-        $('html,body').animate({ scrollTop: 0 }, 'slow');
+        $('html, body').animate({scrollTop: 0}, 'slow')
     }, 'text')
 }
-// $(document).on('click', 'a', function(e) {
-//     e.preventDefault()
-//     window.history.pushState('Object', 'Title', $(this).attr('href'))
-//     updateUrlParameter('theme', (url('?theme') || $('#theme option:selected').text().toLowerCase()))
-//     blogEntry(url('?blog', $(this).attr('href')))
-// })
-$(document).on('change keydown keyup', '#theme, #theme option', function(e) {
+$(document).on('change', '#theme', function(e) {
+    log($(this).find(':selected').text(), this, $(this))
+    localStorage.theme = $(this).find(':selected').text()
     $('#bootstrap').attr('href', $(this).val())
-    updateUrlParameter('theme', $('#theme option:selected').text().toLowerCase())
 })
 $(document).on('click', '.preview', function(e) {
     e.preventDefault()
@@ -81,26 +82,85 @@ $(document).on('click', '.preview', function(e) {
 })
 
 
-// var router = new Navigo()
-// router.on('/blog/:id', function (params, query) {
-//     log(params, query)
-//     blogEntry(params.id) // url('?blog')
-// })
-// router.on(function (query) {
-//     log(query)
-//     if (!url('?theme')) {
-//         updateUrlParameter('theme', 'cyborg')
-//     }
-//     $('.jumbotron').attr('hidden', true)
-// })
-// router.resolve()
 
 
 $(function() {
-    $('.jumbotron').attr('hidden', true)
+
+    var router = new Navigo()
+    router.on('/themes', function (params, query) {
+        $.post('bootswatch.3.json', function(d) {
+            $.each(d.themes, function(i, theme) {
+                theme.name = theme.name.capital()
+                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+                $article.find('.entry-title h1').html(theme.name)
+                $article.find('.entry-thumbnail img').attr('src', theme.thumbnail)
+                $article.find('.entry-thumbnail img').attr('theme', theme.name)
+                $article.find('.entry-thumbnail img').addClass('preview')
+                $article.find('.entry-summary').html(theme.description)
+                $article.find('a').attr('href', theme.preview)
+                $article.find('a').attr('target', '_blank')
+                $('.blog-posts-wrapper').append($article)
+            })
+            $('[href="themes"]').parent().addClass('active')
+
+        })
+
+    })
+    router.on('/blog/new', function (params, query) {
+
+        $('.jumbotron').attr('hidden', false)
+
+        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce'}))
+        tinymce.init({selector: '#tinymce'})
+        $('.panel-body').css('padding', 0)
+        $('.blog-image, .blog-content').remove()
+        $('.blog-title, .blog-blurb').attr('contenteditable', true)
+        $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
 
 
-    var defaultTheme = url('?theme') || 'Cyborg'
+    })
+    router.on('/blog/:id', function (params, query) {
+        blogEntry(params.id)
+        $.post('server.php', {mode: 'all'}, function(posts) {
+            posts.forEach(function(entry) {
+                entry = entry[0]
+                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+                $article.find('.entry-title h1').html(entry.title)
+                $article.find('.entry-thumbnail img').attr('src', entry.image)
+                $article.find('.entry-summary').html(entry.blurb)
+                $article.find('a').attr('href', 'blog/'+entry.id)
+                $('.blog-posts-wrapper').append($article)
+            })
+            $('.jumbotron').attr('hidden', false)
+
+        }, 'json')
+    })
+    router.on('/blog', function (params, query) {
+        $.post('server.php', {mode: 'all'}, function(posts) {
+            posts.forEach(function(entry) {
+                entry = entry[0]
+                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+                $article.find('.entry-title h1').html(entry.title)
+                $article.find('.entry-thumbnail img').attr('src', entry.image)
+                $article.find('.entry-summary').html(entry.blurb)
+                $article.find('a').attr('href', 'blog/'+entry.id)
+                $('.blog-posts-wrapper').append($article)
+            })
+            $('[href="blog"]').parent().addClass('active')
+        }, 'json')
+    })
+    router.on(function(query) {
+        $('.jumbotron').removeAttr('hidden')
+        $('[href=""]').parent().addClass('active')
+
+    })
+    router.resolve()
+
+
+
+
+
+    var defaultTheme = localStorage.theme || 'Cyborg'
     $.post('bootswatch.3.json', function(d) {
         $.each(d.themes, function(i, theme) {
             theme.name = theme.name.capital()
@@ -108,31 +168,9 @@ $(function() {
             if (theme.name === defaultTheme) {
                 $('#bootstrap').attr('href', theme.css)
             }
-
-            log(theme)
-            var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-            $article.find('.entry-title h1').html(theme.name)
-            $article.find('.entry-thumbnail img').attr('src', theme.thumbnail)
-            $article.find('.entry-thumbnail img').attr('theme', theme.name)
-            $article.find('.entry-thumbnail img').addClass('preview')
-            $article.find('.entry-summary').html(theme.description)
-            $article.find('a').attr('href', theme.preview)
-            $article.find('a').attr('target', '_blank')
-            $('.blog-posts-wrapper').append($article)
-
         })
     })
-    $.post('server.php', {mode: 'all'}, function(posts) {
-        posts.forEach(function(entry) {
-            entry = entry[0]
-            var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-            $article.find('.entry-title h1').html(entry.title)
-            $article.find('.entry-thumbnail img').attr('src', entry.image)
-            $article.find('.entry-summary').html(entry.blurb)
-            $article.find('a').attr('href', 'blog/'+entry.id)
-            $('.blog-posts-wrapper').append($article)
-        })
-    }, 'json')
+
 })
 
 </script>
@@ -182,6 +220,9 @@ footer li {
     font-weight: bold;
     text-transform: uppercase;
 }
+.mce-branding-powered-by {
+    display: none !important;
+}
 </style>
 </head>
 <body>
@@ -189,19 +230,13 @@ footer li {
     <header>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-    <!--             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button> -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="https://www.fallenreaper.com/">Will</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="">Home</a></li>
                         <li><a href="blog">Blog</a></li>
                         <li><a href="themes">Themes</a></li>
 <!--                         <li class="dropdown">
@@ -231,19 +266,21 @@ footer li {
         </nav>
     </header>
     <content>
-        <div class="jumbotron">
+        <div id='#jumbotron' class="jumbotron" hidden>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1 class='blog-title'></h1>
+                    <p class='blog-blurb'></p>
+
                 </div>
                 <div class="panel-body entry-summary">
-                    <p class='blog-blurb'></p>
                     <img class='blog-image' />
+                    <p class='blog-content'></p>
+
                 </div>
                 <div class="panel-footer">
                     <div class='timestamp' hidden>Created on <a href='' class='blog-created'></a></div>
                     <div class='timestamp' hidden>Modified on <a href='' class='blog-modified'></a></div>
-                    <a class="btn btn-primary more btn-lg btn-block" href="#">Read more</a>
                 </div>
             </div>
 
