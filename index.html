@@ -81,7 +81,16 @@ $(document).on('click', '.preview', function(e) {
     $('#theme').val('https://bootswatch.com/'+$(this).attr('theme').toLowerCase()+'/bootstrap.css').change()
 })
 
-
+function externalize() {
+    var comp = new RegExp(location.host)
+    $('a').each(function() {
+        if(comp.test($(this).attr('href'))) {
+        }
+        else {
+            $(this).attr('target', '_blank')
+        }
+    })
+}
 
 
 $(function() {
@@ -132,11 +141,12 @@ $(function() {
                 $('.blog-posts-wrapper').append($article)
             })
             $('.jumbotron').attr('hidden', false)
-
+            externalize()
         }, 'json')
     })
     router.on('/blog', function (params, query) {
         $.post('server.php', {mode: 'all'}, function(posts) {
+            log(posts)
             posts.forEach(function(entry) {
                 entry = entry[0]
                 var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
@@ -223,6 +233,17 @@ footer li {
 .mce-branding-powered-by {
     display: none !important;
 }
+
+.panel-default {
+    display: flex;
+    flex-direction: column;
+}
+.panel-body {
+    flex-grow: 1;
+}
+#template {
+    display: none;
+}
 </style>
 </head>
 <body>
@@ -266,7 +287,7 @@ footer li {
         </nav>
     </header>
     <content>
-        <div id='#jumbotron' class="jumbotron" hidden>
+        <div id='jumbotron' class="jumbotron" hidden>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1 class='blog-title'></h1>

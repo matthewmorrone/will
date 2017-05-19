@@ -3,16 +3,17 @@ if ($_POST) {
 	extract($_POST);
 
 
+	$credentials = array_map(function($a) {
+		return trim($a);
+	}, file('credentials.txt'));
 
-
-    $server = (isset($server) ? $server : "localhost");
-    $address = (isset($address) ? $address : "localhost");
-    $username = (isset($username) ? $username : "root");
-    $password = (isset($password) ? $password : "root");
+    $address  = (isset($address)  ? $address  : $credentials[0]);
+    $username = (isset($username) ? $username : $credentials[1]);
+    $password = (isset($password) ? $password : $credentials[2]);
     // $connect = connect($server, $username, $password);
 	// $link = connect($account, $username, $password, $database) or die(mysqli_error($link));
 
-    $database = (isset($database) ? $database : "will");
+    $database = (isset($database) ? $database : $credentials[3]);
     // $database = database($database, $connect);
 	// $database 	= (isset($database) 	? $database 	: "");
 
