@@ -83,7 +83,7 @@ $(document).on('click', '.preview', function(e) {
 
 function externalize() {
     var comp = new RegExp(location.host)
-    $('a').each(function() {
+    $('.jumbotron a').each(function() {
         if(comp.test($(this).attr('href'))) {
         }
         else {
