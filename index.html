@@ -69,6 +69,7 @@ function blogEntry(mode) {
         $('.blog-blurb').html(entry.blurb)
         $('.blog-content').html(entry.content)
         $('html, body').animate({scrollTop: 0}, 'slow')
+        document.title = 'Will | ' + entry.title
     }, 'text')
 }
 $(document).on('change', '#theme', function(e) {
@@ -111,6 +112,7 @@ $(function() {
                 $('.blog-posts-wrapper').append($article)
             })
             $('[href="themes"]').parent().addClass('active')
+            document.title = 'Will | Themes'
 
         })
 
@@ -157,11 +159,13 @@ $(function() {
                 $('.blog-posts-wrapper').append($article)
             })
             $('[href="blog"]').parent().addClass('active')
+            document.title = 'Will | Blog'
         }, 'json')
     })
     router.on(function(query) {
         $('.jumbotron').removeAttr('hidden')
         $('[href=""]').parent().addClass('active')
+        document.title = 'Will | Home'
 
     })
     router.resolve()
