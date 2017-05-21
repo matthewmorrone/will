@@ -47,15 +47,28 @@ log = console.log.bind(console)
 
 <script type="text/javascript" src="navigo.js"></script>
 <script>
+// window.twttr = (function(d, s, id) {
+//   var js, fjs = d.getElementsByTagName(s)[0],
+//     t = window.twttr || {};
+//   if (d.getElementById(id)) return t;
+//   js = d.createElement(s);
+//   js.id = id;
+//   js.src = "https://platform.twitter.com/widgets.js";
+//   fjs.parentNode.insertBefore(js, fjs);
+
+//   t._e = [];
+//   t.ready = function(f) {
+//     t._e.push(f);
+//   };
+
+//   return t;
+// }(document, "script", "twitter-wjs"));
+</script>
+<script>
 log(window.location)
 String.prototype.capital = function capital() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
-// function updateUrlParameter(param, value) {
-//     var regExp = new RegExp(param + "(.+?)(&|$)", "g");
-//     var newUrl = window.location.href.replace(regExp, param + "=" + value + "$2");
-//     window.history.pushState("", "", newUrl);
-// }
 function blogEntry(mode) {
     $.post('server.php', {mode: mode}, function(entry) {
         entry = JSON.parse(entry)
@@ -73,7 +86,14 @@ function blogEntry(mode) {
     }, 'text')
 }
 $(document).on('change', '#theme', function(e) {
-    log($(this).find(':selected').text(), this, $(this))
+    // if ($(this).find(':selected').attr('shade') === 'dark') {
+    //     $('#twitter-widget-2').show()
+    //     $('#twitter-widget-1').hide()
+    // }
+    // if ($(this).find(':selected').attr('shade') === 'light') {
+    //     $('#twitter-widget-2').hide()
+    //     $('#twitter-widget-1').show()
+    // }
     localStorage.theme = $(this).find(':selected').text()
     $('#bootstrap').attr('href', $(this).val())
 })
@@ -86,18 +106,52 @@ function externalize() {
     var comp = new RegExp(location.host)
     $('.jumbotron a').each(function() {
         if(comp.test($(this).attr('href'))) {
+
         }
         else {
             $(this).attr('target', '_blank')
         }
     })
 }
+$.fn.hide = function() {
+    $(this).attr('hidden', true)
+    return $(this)
+}
+$.fn.show = function() {
+    $(this).removeAttr('hidden')
+    return $(this)
+}
 
-
+function reset() {
+    $('#jumbotron').hide()
+    $('.blog-posts-wrapper .panel').remove()
+}
 $(function() {
 
+
+    reset()
     var router = new Navigo()
+    // https://github.com/krasimir/navigo
+    // http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
+    // http://krasimirtsonev.com/blog/article/deep-dive-into-client-side-routing-navigo-pushstate-hash
+
+    router.on('/twit', function (params, query) {
+        reset()
+        $('#jumbotron').show().find('.blog-content').append($('#twitter').show())
+        $('.blog-blurb').append($('.twitter-follow-button'))
+        document.title = 'Will | Tweets'
+        $('[href="twit"]').parent().addClass('active')
+    })
+    router.on('/twit/:count', function (params, query) {
+        reset()
+        $('.twitter-timeline').data('tweet-limit', params.count)
+        $('#jumbotron').show().find('.blog-content').append($('#twitter').show())
+        $('.blog-blurb').append($('.twitter-follow-button'))
+        document.title = 'Will | Showing '+params.count+' tweet'+(params.count == 1 ? '' : 's')
+        $('[href="twit"]').parent().addClass('active')
+    })
     router.on('/themes', function (params, query) {
+        reset()
         $.post('bootswatch.3.json', function(d) {
             $.each(d.themes, function(i, theme) {
                 theme.name = theme.name.capital()
@@ -113,24 +167,21 @@ $(function() {
             })
             $('[href="themes"]').parent().addClass('active')
             document.title = 'Will | Themes'
-
         })
-
     })
     router.on('/blog/new', function (params, query) {
-
         $('.jumbotron').attr('hidden', false)
-
         $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce'}))
         tinymce.init({selector: '#tinymce'})
         $('.panel-body').css('padding', 0)
         $('.blog-image, .blog-content').remove()
         $('.blog-title, .blog-blurb').attr('contenteditable', true)
         $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
-
-
+        $('[href="blog"]').parent().addClass('active')
+        document.title = 'Will | New Blog Post'
     })
     router.on('/blog/:id', function (params, query) {
+        reset()
         blogEntry(params.id)
         $.post('server.php', {mode: 'all'}, function(posts) {
             posts.forEach(function(entry) {
@@ -147,6 +198,7 @@ $(function() {
         }, 'json')
     })
     router.on('/blog', function (params, query) {
+        reset()
         $.post('server.php', {mode: 'all'}, function(posts) {
             log(posts)
             posts.forEach(function(entry) {
@@ -162,12 +214,19 @@ $(function() {
             document.title = 'Will | Blog'
         }, 'json')
     })
+    router.on('/about', function(query) {
+        reset()
+        $('.jumbotron').removeAttr('hidden')
+        $('[href="about"]').parent().addClass('active')
+        document.title = 'Will | About'
+    })
     router.on(function(query) {
+        reset()
         $('.jumbotron').removeAttr('hidden')
         $('[href=""]').parent().addClass('active')
         document.title = 'Will | Home'
-
     })
+
     router.resolve()
 
 
@@ -178,7 +237,12 @@ $(function() {
     $.post('bootswatch.3.json', function(d) {
         $.each(d.themes, function(i, theme) {
             theme.name = theme.name.capital()
-            $('#theme').append($('<option></option>', {text: theme.name, val: theme.css, selected: (theme.name === defaultTheme ? true : false)}))
+            $('#theme').append($('<option></option>', {
+                text: theme.name,
+                val: theme.css,
+                selected: (theme.name === defaultTheme ? true : false),
+                shade: theme.shade,
+            }))
             if (theme.name === defaultTheme) {
                 $('#bootstrap').attr('href', theme.css)
             }
@@ -259,23 +323,13 @@ footer li {
                     <a class="navbar-brand" href="https://www.fallenreaper.com/">Will</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
                     <ul class="nav navbar-nav">
+                    <!-- data-navigo: for now, don't use this. elements aren't shown and hidden correctly yet -->
                         <li><a href="">Home</a></li>
+                        <li><a href="about">About</a></li>
                         <li><a href="blog">Blog</a></li>
                         <li><a href="themes">Themes</a></li>
-<!--                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Themes <span class="caret"></span></a>
-                            <ul class="dropdown-menu" id='theme-listing'>
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li> -->
+                        <li><a href="twit">Tweets</a></li>
                     </ul>
                     <form class="navbar-form navbar-right" role="search">
                         <div class="form-group">
@@ -296,19 +350,16 @@ footer li {
                 <div class="panel-heading">
                     <h1 class='blog-title'></h1>
                     <p class='blog-blurb'></p>
-
                 </div>
                 <div class="panel-body entry-summary">
                     <img class='blog-image' />
                     <p class='blog-content'></p>
-
                 </div>
                 <div class="panel-footer">
                     <div class='timestamp' hidden>Created on <a href='' class='blog-created'></a></div>
                     <div class='timestamp' hidden>Modified on <a href='' class='blog-modified'></a></div>
                 </div>
             </div>
-
             <!-- <hr> -->
             <!-- <div class='blog-content'></div> -->
             <!-- <p><a class="btn btn-primary btn-lg">Learn more</a></p> -->
@@ -326,6 +377,26 @@ footer li {
 
             </div>
         </div>
+        <div id='twitter' hidden>
+            <!-- https://dev.twitter.com/web/embedded-timelines -->
+            <!-- <a class="twitter-timeline" href="https://twitter.com/Fallenreaper">Tweets by Fallenreaper</a> -->
+            <a class="twitter-follow-button"
+            data-size="large"
+            href="https://twitter.com/FallenReaper">
+            Follow @FallenReaper
+            </a>
+            <a class="twitter-timeline"
+            href="https://twitter.com/Fallenreaper"
+            data-tweet-limit="3"
+            data-chrome='noheader nofooter noborders noscrollbar transparent'
+            data-theme='dark'
+            data-link-color='#008800'
+            data-border-color='#008800'
+            data-screen-name="FallenReaper"
+            >Tweets by Fallenreaper</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
     </content>
     <footer class="well">
         <nav>

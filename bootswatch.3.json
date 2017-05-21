@@ -3,6 +3,7 @@
   "themes": [
     {
       "name": "Cerulean",
+      "shade": "light",
       "description": "A calm blue sky",
       "thumbnail": "https://bootswatch.com/cerulean/thumbnail.png",
       "preview": "https://bootswatch.com/cerulean/",
@@ -16,6 +17,7 @@
     },
     {
       "name": "Cosmo",
+      "shade": "light",
       "description": "An ode to Metro",
       "thumbnail": "https://bootswatch.com/cosmo/thumbnail.png",
       "preview": "https://bootswatch.com/cosmo/",
@@ -29,6 +31,7 @@
     },
     {
       "name": "Cyborg",
+      "shade": "dark",
       "description": "Jet black and electric blue",
       "thumbnail": "https://bootswatch.com/cyborg/thumbnail.png",
       "preview": "https://bootswatch.com/cyborg/",
@@ -42,6 +45,7 @@
     },
     {
       "name": "Darkly",
+      "shade": "dark",
       "description": "Flatly in night mode",
       "thumbnail": "https://bootswatch.com/darkly/thumbnail.png",
       "preview": "https://bootswatch.com/darkly/",
@@ -55,6 +59,7 @@
     },
     {
       "name": "Flatly",
+      "shade": "light",
       "description": "Flat and modern",
       "thumbnail": "https://bootswatch.com/flatly/thumbnail.png",
       "preview": "https://bootswatch.com/flatly/",
@@ -68,6 +73,7 @@
     },
     {
       "name": "Journal",
+      "shade": "light",
       "description": "Crisp like a new sheet of paper",
       "thumbnail": "https://bootswatch.com/journal/thumbnail.png",
       "preview": "https://bootswatch.com/journal/",
@@ -81,6 +87,7 @@
     },
     {
       "name": "Lumen",
+      "shade": "light",
       "description": "Light and shadow",
       "thumbnail": "https://bootswatch.com/lumen/thumbnail.png",
       "preview": "https://bootswatch.com/lumen/",
@@ -94,6 +101,7 @@
     },
     {
       "name": "Paper",
+      "shade": "light",
       "description": "Material is the metaphor",
       "thumbnail": "https://bootswatch.com/paper/thumbnail.png",
       "preview": "https://bootswatch.com/paper/",
@@ -107,6 +115,7 @@
     },
     {
       "name": "Readable",
+      "shade": "light",
       "description": "Optimized for legibility",
       "thumbnail": "https://bootswatch.com/readable/thumbnail.png",
       "preview": "https://bootswatch.com/readable/",
@@ -120,6 +129,7 @@
     },
     {
       "name": "Sandstone",
+      "shade": "light",
       "description": "A touch of warmth",
       "thumbnail": "https://bootswatch.com/sandstone/thumbnail.png",
       "preview": "https://bootswatch.com/sandstone/",
@@ -133,6 +143,7 @@
     },
     {
       "name": "Simplex",
+      "shade": "light",
       "description": "Mini and minimalist",
       "thumbnail": "https://bootswatch.com/simplex/thumbnail.png",
       "preview": "https://bootswatch.com/simplex/",
@@ -146,6 +157,7 @@
     },
     {
       "name": "Slate",
+      "shade": "dark",
       "description": "Shades of gunmetal gray",
       "thumbnail": "https://bootswatch.com/slate/thumbnail.png",
       "preview": "https://bootswatch.com/slate/",
@@ -159,6 +171,7 @@
     },
     {
       "name": "Solar",
+      "shade": "dark",
       "description": "A spin on Solarized",
       "thumbnail": "https://bootswatch.com/solar/thumbnail.png",
       "preview": "https://bootswatch.com/solar/",
@@ -172,6 +185,7 @@
     },
     {
       "name": "Spacelab",
+      "shade": "light",
       "description": "Silvery and sleek",
       "thumbnail": "https://bootswatch.com/spacelab/thumbnail.png",
       "preview": "https://bootswatch.com/spacelab/",
@@ -185,6 +199,7 @@
     },
     {
       "name": "Superhero",
+      "shade": "dark",
       "description": "The brave and the blue",
       "thumbnail": "https://bootswatch.com/superhero/thumbnail.png",
       "preview": "https://bootswatch.com/superhero/",
@@ -198,6 +213,7 @@
     },
     {
       "name": "United",
+      "shade": "light",
       "description": "Ubuntu orange and unique font",
       "thumbnail": "https://bootswatch.com/united/thumbnail.png",
       "preview": "https://bootswatch.com/united/",
@@ -211,6 +227,7 @@
     },
     {
       "name": "Yeti",
+      "shade": "light",
       "description": "A friendly foundation",
       "thumbnail": "https://bootswatch.com/yeti/thumbnail.png",
       "preview": "https://bootswatch.com/yeti/",
