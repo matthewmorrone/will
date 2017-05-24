@@ -69,8 +69,8 @@ log(window.location)
 String.prototype.capital = function capital() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
-function blogEntry(mode) {
-    $.post('server.php', {mode: mode}, function(entry) {
+function blogEntry(id) {
+    $.post('server.php', {mode: 'get', id: id}, function(entry) {
         entry = JSON.parse(entry)
         $('.entry').attr('hidden', false)
         $('.blog-title').html(entry.title)
@@ -101,7 +101,30 @@ $(document).on('click', '.preview', function(e) {
     e.preventDefault()
     $('#theme').val('https://bootswatch.com/'+$(this).attr('theme').toLowerCase()+'/bootstrap.css').change()
 })
+$(document).on('click', '#submitPost', function(e) {
+    e.preventDefault()
+    $.post('server.php', {
+        mode: 'new',
+        title: $('.blog-title').html(),
+        blurb: $('.blog-blurb').html(),
+        content: tinyMCE.activeEditor.getContent()
+    }, function(d) {
+        window.location.href = 'blog'
+    }, 'text')
+})
+$(document).on('click', '#removePost', function() {
+    var $article = $(this).parents('article')
+    if (window.confirm("Really delete?")) {
 
+
+        $.post('server.php', {
+            mode: 'delete',
+            id: window.location.href.split('/').pop()
+        }, function(d) {
+            window.location.href = 'blog'
+        }, 'text')
+    }
+})
 function externalize() {
     var comp = new RegExp(location.host)
     $('.jumbotron a').each(function() {
@@ -171,46 +194,91 @@ $(function() {
     })
     router.on('/blog/new', function (params, query) {
         $('.jumbotron').attr('hidden', false)
-        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce'}))
-        tinymce.init({selector: '#tinymce'})
+        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: 'shlergh'}))
+
+        // https://www.tinymce.com/docs/
+        tinymce.init({
+            selector: '#tinymce',
+            theme: 'modern',
+            plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+
+
+
         $('.panel-body').css('padding', 0)
         $('.blog-image, .blog-content').remove()
         $('.blog-title, .blog-blurb').attr('contenteditable', true)
         $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
         $('[href="blog"]').parent().addClass('active')
+
+        $('#newPost').css('display', 'none')
+        $('#submitPost').css('display', '')
+        $('#editPost').css('display', 'none')
+        $('#removePost').css('display', 'none')
+
+
+
         document.title = 'Will | New Blog Post'
     })
     router.on('/blog/:id', function (params, query) {
         reset()
         blogEntry(params.id)
-        $.post('server.php', {mode: 'all'}, function(posts) {
-            posts.forEach(function(entry) {
-                entry = entry[0]
-                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-                $article.find('.entry-title h1').html(entry.title)
-                $article.find('.entry-thumbnail img').attr('src', entry.image)
-                $article.find('.entry-summary').html(entry.blurb)
-                $article.find('a').attr('href', 'blog/'+entry.id)
-                $('.blog-posts-wrapper').append($article)
-            })
-            $('.jumbotron').attr('hidden', false)
-            externalize()
-        }, 'json')
+        $('#newPost').css('display', 'none')
+        $('#submitPost').css('display', 'none')
+        $('#editPost').css('display', '')
+        $('#removePost').css('display', '')
+
+
+        // $.post('server.php', {mode: 'all'}, function(posts) {
+        //     posts.forEach(function(entry) {
+        //         entry = entry[0]
+        //         var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+        //         $article.find('.entry-title h1').html(entry.title)
+        //         $article.find('.entry-summary').html(entry.blurb)
+        //         $article.find('a').attr('href', 'blog/'+entry.id)
+        //         $('.blog-posts-wrapper').append($article)
+        //     })
+        //     $('.jumbotron').attr('hidden', false)
+        //     externalize()
+        // }, 'json')
+
+        $('.jumbotron').attr('hidden', false)
+        externalize()
     })
     router.on('/blog', function (params, query) {
         reset()
         $.post('server.php', {mode: 'all'}, function(posts) {
-            log(posts)
             posts.forEach(function(entry) {
                 entry = entry[0]
                 var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
                 $article.find('.entry-title h1').html(entry.title)
-                $article.find('.entry-thumbnail img').attr('src', entry.image)
+                if (entry.image) {
+                    $article.find('.entry-thumbnail img').attr('src', entry.image)
+                }
+                else {
+                    $article.find('.entry-thumbnail img').remove()
+                }
                 $article.find('.entry-summary').html(entry.blurb)
                 $article.find('a').attr('href', 'blog/'+entry.id)
                 $('.blog-posts-wrapper').append($article)
             })
             $('[href="blog"]').parent().addClass('active')
+
+            $('#newPost').css('display', '')
+            $('#submitPost').css('display', 'none')
+            $('#editPost').css('display', 'none')
+            $('#removePost').css('display', 'none')
+
             document.title = 'Will | Blog'
         }, 'json')
     })
@@ -348,8 +416,8 @@ footer li {
         <div id='jumbotron' class="jumbotron" hidden>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1 class='blog-title'></h1>
-                    <p class='blog-blurb'></p>
+                    <h1 class='blog-title'>testing</h1>
+                    <p class='blog-blurb'>123</p>
                 </div>
                 <div class="panel-body entry-summary">
                     <img class='blog-image' />
@@ -366,6 +434,12 @@ footer li {
         </div>
 
         <div class="blog-posts">
+            <div style='width: 100%;'>
+                <a id='newPost'     hidden style='width: 100%;'  href='blog/new'    class='btn btn-success'><i class='fa fa-plus'></i> New Post</a>
+                <a id='submitPost'  hidden style='width: 100%;'  href='blog'        class='btn btn-default'><i class='fa fa-check'></i> Submit Post</a>
+                <a id='editPost'    hidden style='width: 100%;'  href='blog/edit'   class='btn btn-warning'><i class='fa fa-edit'></i> Edit Post</a>
+                <a id='removePost'  hidden style='width: 100%;'  href='blog'        class='btn btn-danger' ><i class='fa fa-minus'></i> Remove Post</a>
+            </div>
             <div id='template' class="panel panel-default" hidden>
                 <div class="panel-heading entry-title"><h1></h1></div>
                 <div class="panel-body entry-summary"></div>

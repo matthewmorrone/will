@@ -25,12 +25,28 @@ if ($_POST) {
 			$query = 'SELECT id, created, title, blurb, image FROM posts ORDER BY created DESC';
 			echo json_query($mysqli, $query);
 		break;
-		default:
-			$mode = (int)$mode;
-			if (is_int($mode)) {
-				$query = "SELECT id, created, modified, title, blurb, content, image FROM posts WHERE id = $mode";
+		case "get":
+			$id = (int)$id;
+			if (is_int($id)) {
+				$query = "SELECT id, created, modified, title, blurb, content, image FROM posts WHERE id = $id";
 				echo json_encode(get_query($mysqli, $query)[0][0]);
 			}
+		break;
+		case "new":
+			$title = mysql_real_escape_string($title);
+			$blurb = mysql_real_escape_string($blurb);
+			$content = mysql_real_escape_string($content);
+			$query = "INSERT INTO posts (title, blurb, content) VALUES ('$title', '$blurb', '$content')";
+			$result = $mysqli->query($query);
+			// echo $mysqli->error."\n";
+		break;
+		case "delete":
+			$query = "DELETE FROM posts WHERE id = $id";
+			$result = $mysqli->query($query);
+			// echo $mysqli->error."\n";
+		break;
+		default:
+			echo "fail\n";
 		break;
 	}
 
