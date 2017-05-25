@@ -40,6 +40,14 @@ if ($_POST) {
 			$result = $mysqli->query($query);
 			// echo $mysqli->error."\n";
 		break;
+		case "edit":
+			$title = mysql_real_escape_string($title);
+			$blurb = mysql_real_escape_string($blurb);
+			$content = mysql_real_escape_string($content);
+			$query = "UPDATE posts SET title = '$title', blurb = '$blurb', content = '$content'";
+			$result = $mysqli->query($query);
+			// echo $mysqli->error."\n";
+		break;
 		case "delete":
 			$query = "DELETE FROM posts WHERE id = $id";
 			$result = $mysqli->query($query);

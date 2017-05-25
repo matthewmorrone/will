@@ -69,22 +69,6 @@ log(window.location)
 String.prototype.capital = function capital() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
-function blogEntry(id) {
-    $.post('server.php', {mode: 'get', id: id}, function(entry) {
-        entry = JSON.parse(entry)
-        $('.entry').attr('hidden', false)
-        $('.blog-title').html(entry.title)
-        $('.blog-id').html(entry.id)
-        $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY'))
-        $('.blog-created').attr('href', window.location.href)
-        $('.blog-modified').html(entry.modified)
-        $('.blog-image').attr('src', entry.image)
-        $('.blog-blurb').html(entry.blurb)
-        $('.blog-content').html(entry.content)
-        $('html, body').animate({scrollTop: 0}, 'slow')
-        document.title = 'Will | ' + entry.title
-    }, 'text')
-}
 $(document).on('change', '#theme', function(e) {
     // if ($(this).find(':selected').attr('shade') === 'dark') {
     //     $('#twitter-widget-2').show()
@@ -101,15 +85,17 @@ $(document).on('click', '.preview', function(e) {
     e.preventDefault()
     $('#theme').val('https://bootswatch.com/'+$(this).attr('theme').toLowerCase()+'/bootstrap.css').change()
 })
+
+
 $(document).on('click', '#submitPost', function(e) {
     e.preventDefault()
     $.post('server.php', {
-        mode: 'new',
+        mode: (window.location.pathname.includes('/edit/') ? 'edit' : 'new'),
         title: $('.blog-title').html(),
         blurb: $('.blog-blurb').html(),
         content: tinyMCE.activeEditor.getContent()
     }, function(d) {
-        window.location.href = 'blog'
+        window.location.href = (window.location.pathname.includes('/edit/') ? 'blog/'+window.location.pathname.split('/').pop() : 'blog')
     }, 'text')
 })
 $(document).on('click', '#removePost', function() {
@@ -215,10 +201,15 @@ $(function() {
 
 
 
+
         $('.panel-body').css('padding', 0)
         $('.blog-image, .blog-content').remove()
         $('.blog-title, .blog-blurb').attr('contenteditable', true)
         $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
+
+
+
+
         $('[href="blog"]').parent().addClass('active')
 
         $('#newPost').css('display', 'none')
@@ -230,13 +221,94 @@ $(function() {
 
         document.title = 'Will | New Blog Post'
     })
+    router.on('/blog/edit/:id', function (params, query) {
+        reset()
+        $('.jumbotron').attr('hidden', false)
+        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: ''}))
+
+        // https://www.tinymce.com/docs/
+        tinymce.init({
+            selector: '#tinymce',
+            theme: 'modern',
+            plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+
+        $.post('server.php', {mode: 'get', id: params.id}, function(entry) {
+            entry = JSON.parse(entry)
+            $('.entry').attr('hidden', false)
+            // $('.blog-id').html(entry.id)
+
+            $('.blog-title').html(entry.title)
+            $('.blog-blurb').html(entry.blurb)
+            $('.blog-content').html(entry.content)
+            $('.blog-created').attr('href', window.location.href)
+            $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
+            $('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
+
+            // tinyMCE.activeEditor.getContent()
+
+            // tinymce.activeEditor.setContent(entry.content)
+            tinymce.activeEditor.on('init', function(e) {
+                e.target.setContent(entry.content)
+            })
+
+            $('html, body').animate({scrollTop: 0}, 'slow')
+            document.title = 'Will | ' + entry.title
+        }, 'text')
+
+
+        $('.panel-body').css('padding', 0)
+        $('.blog-image, .blog-content').remove()
+        $('.blog-title, .blog-blurb').attr('contenteditable', true)
+        $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
+        $('[href="blog"]').parent().addClass('active')
+
+        $('#blog-controls').css('display', 'block')
+
+        $('#newPost').css('display', 'none')
+        $('#submitPost').css('display', '')
+        $('#editPost').css('display', 'none')
+        $('#removePost').css('display', '')
+
+
+
+        document.title = 'Will | Edit Blog Post'
+    })
     router.on('/blog/:id', function (params, query) {
         reset()
-        blogEntry(params.id)
+        $.post('server.php', {mode: 'get', id: params.id}, function(entry) {
+            entry = JSON.parse(entry)
+            $('.entry').attr('hidden', false)
+            $('.blog-title').html(entry.title)
+            $('.blog-id').html(entry.id)
+            $('.blog-created').attr('href', window.location.href)
+            $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
+            $('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
+            $('.blog-image').attr('src', entry.image)
+            $('.blog-blurb').html(entry.blurb)
+            $('.blog-content').html(entry.content)
+            $('html, body').animate({scrollTop: 0}, 'slow')
+            document.title = 'Will | ' + entry.title
+        }, 'text')
+
+        $('#blog-controls').css('display', 'block')
+
         $('#newPost').css('display', 'none')
         $('#submitPost').css('display', 'none')
         $('#editPost').css('display', '')
         $('#removePost').css('display', '')
+
+        $('#editPost').attr('href', $('#editPost').attr('href', )+'/'+params.id)
 
 
         // $.post('server.php', {mode: 'all'}, function(posts) {
@@ -369,7 +441,9 @@ footer li {
 .mce-branding-powered-by {
     display: none !important;
 }
-
+#blog-controls {
+    display: none;
+}
 .panel-default {
     display: flex;
     flex-direction: column;
@@ -416,16 +490,16 @@ footer li {
         <div id='jumbotron' class="jumbotron" hidden>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1 class='blog-title'>testing</h1>
-                    <p class='blog-blurb'>123</p>
+                    <h1 class='blog-title'></h1>
+                    <p class='blog-blurb'></p>
                 </div>
                 <div class="panel-body entry-summary">
                     <img class='blog-image' />
                     <p class='blog-content'></p>
                 </div>
                 <div class="panel-footer">
-                    <div class='timestamp' hidden>Created on <a href='' class='blog-created'></a></div>
-                    <div class='timestamp' hidden>Modified on <a href='' class='blog-modified'></a></div>
+                    <div class='timestamp' >Created on <a href='' class='blog-created'></a></div>
+                    <div class='timestamp' >Modified on <a href='' class='blog-modified'></a></div>
                 </div>
             </div>
             <!-- <hr> -->
@@ -434,7 +508,7 @@ footer li {
         </div>
 
         <div class="blog-posts">
-            <div style='width: 100%;'>
+            <div id='blog-controls' style='width: 100%;'>
                 <a id='newPost'     hidden style='width: 100%;'  href='blog/new'    class='btn btn-success'><i class='fa fa-plus'></i> New Post</a>
                 <a id='submitPost'  hidden style='width: 100%;'  href='blog'        class='btn btn-default'><i class='fa fa-check'></i> Submit Post</a>
                 <a id='editPost'    hidden style='width: 100%;'  href='blog/edit'   class='btn btn-warning'><i class='fa fa-edit'></i> Edit Post</a>
