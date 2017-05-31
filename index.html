@@ -8,25 +8,24 @@
 <title>Will | Will is a modern responsive business and corporate theme that helps you to create a strong–yet beautiful–online presence for your business</title>
 <meta name="robots" content="noindex,follow">
 <meta name="theme-color" content="#e1dfdf">
-<!-- <link rel="shortcut icon"   type="image/x-icon" href="/favicon.ico"> -->
-<!-- <link rel="icon"            type="image/x-icon" href="/favicon.ico"> -->
-<!-- <link rel="shortcut icon"   type="image/x-icon" href="http://superdupergc.com/press/black_ice/images/blackicelogo.png" /> -->
-<link rel="shortcut icon"   type="image/x-icon" href="http://www.matthewmorrone.com/psi.ico" />
+<!-- <link rel="shortcut icon"	 type="image/x-icon" href="/favicon.ico"> -->
+<!-- <link rel="icon"						type="image/x-icon" href="/favicon.ico"> -->
+<link rel="shortcut icon"	 type="image/x-icon" href="http://www.matthewmorrone.com/psi.ico" />
 <script>
 log = console.log.bind(console)
 </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.20/autosize.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.0/url.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script> -->
 
 
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=w2gkux7gagnlvx1jmtsi6j4jxhg8aogi6wcv9tfxkihcfz8l"></script>
@@ -44,520 +43,554 @@ log = console.log.bind(console)
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" id='bootstrap'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.css" />
 
-
 <script type="text/javascript" src="navigo.js"></script>
-<script>
-// window.twttr = (function(d, s, id) {
-//   var js, fjs = d.getElementsByTagName(s)[0],
-//     t = window.twttr || {};
-//   if (d.getElementById(id)) return t;
-//   js = d.createElement(s);
-//   js.id = id;
-//   js.src = "https://platform.twitter.com/widgets.js";
-//   fjs.parentNode.insertBefore(js, fjs);
 
-//   t._e = [];
-//   t.ready = function(f) {
-//     t._e.push(f);
-//   };
-
-//   return t;
-// }(document, "script", "twitter-wjs"));
-</script>
 <script>
-log(window.location)
+var keys = []
+$(document).keydown(function(e) {
+	keys.push(e.keyCode)
+	if (keys.toString().indexOf("38,38,40,40,37,39,37,39,66,65") >= 0) {
+		$(document).unbind('keydown', arguments.callee)
+
+		localStorage.admin = true
+		window.location.reload()
+		// var password = prompt('psswrd plz')
+
+		// $.post('server.php', {
+		// 	mode: 'auth',
+		// 	password: password
+		// }, function(d) {
+		// 	if (d === 'win') {
+		// 		admin = true
+		// 		localStorage.admin = true
+		// 	}
+		// }, 'text')
+	}
+})
+
+admin = !!localStorage.admin
 String.prototype.capital = function capital() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
+function qs(variable) {
+		var query = window.location.search.substring(1)
+		var vars = query.split('&')
+		for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split('=')
+				if (decodeURIComponent(pair[0]) == variable) {
+						return decodeURIComponent(pair[1])
+				}
+		}
+		return false
 }
 $(document).on('change', '#theme', function(e) {
-    // if ($(this).find(':selected').attr('shade') === 'dark') {
-    //     $('#twitter-widget-2').show()
-    //     $('#twitter-widget-1').hide()
-    // }
-    // if ($(this).find(':selected').attr('shade') === 'light') {
-    //     $('#twitter-widget-2').hide()
-    //     $('#twitter-widget-1').show()
-    // }
-    localStorage.theme = $(this).find(':selected').text()
-    $('#bootstrap').attr('href', $(this).val())
+	localStorage.theme = $(this).find(':selected').text()
+	$('#bootstrap').attr('href', $(this).val())
 })
 $(document).on('click', '.preview', function(e) {
-    e.preventDefault()
-    $('#theme').val('https://bootswatch.com/'+$(this).attr('theme').toLowerCase()+'/bootstrap.css').change()
+	e.preventDefault()
+	$('#theme').val('https://bootswatch.com/'+$(this).attr('theme').toLowerCase()+'/bootstrap.css').change()
 })
 
 
-$(document).on('click', '#submitPost', function(e) {
-    e.preventDefault()
-    $.post('server.php', {
-        mode: (window.location.pathname.includes('/edit/') ? 'edit' : 'new'),
-        title: $('.blog-title').html(),
-        blurb: $('.blog-blurb').html(),
-        content: tinyMCE.activeEditor.getContent()
-    }, function(d) {
-        window.location.href = (window.location.pathname.includes('/edit/') ? 'blog/'+window.location.pathname.split('/').pop() : 'blog')
-    }, 'text')
+$(document).on('click', '#submit-post', function(e) {
+	e.preventDefault()
+	if (!admin) return
+	$.post('server.php', {
+		mode: (window.location.pathname.includes('/edit/') ? 'edit' : 'new'),
+		title: $('.blog-title').html(),
+		blurb: $('.blog-blurb').html(),
+		content: tinyMCE.activeEditor.getContent()
+	}, function(d) {
+		window.location.href = (window.location.pathname.includes('/edit/') ? 'blog/'+window.location.pathname.split('/').pop() : 'blog')
+	}, 'text')
 })
-$(document).on('click', '#removePost', function() {
-    var $article = $(this).parents('article')
-    if (window.confirm("Really delete?")) {
-
-
-        $.post('server.php', {
-            mode: 'delete',
-            id: window.location.href.split('/').pop()
-        }, function(d) {
-            window.location.href = 'blog'
-        }, 'text')
-    }
+$(document).on('click', '#remove-post', function() {
+	var $article = $(this).parents('article')
+	if (window.confirm("Really delete?")) {
+		$.post('server.php', {
+			mode: 'delete',
+			id: window.location.href.split('/').pop()
+		}, function(d) {
+			window.location.href = 'blog'
+		}, 'text')
+	}
+},
+{
+	before: function (done, params) {
+		if(!admin) {
+			done(false)
+		}
+		// else {
+		// 	done()
+		// }
+	}
 })
 function externalize() {
-    var comp = new RegExp(location.host)
-    $('.jumbotron a').each(function() {
-        if(comp.test($(this).attr('href'))) {
+	var comp = new RegExp(location.host)
+	$('.jumbotron a').each(function() {
+		if(comp.test($(this).attr('href'))) {
 
-        }
-        else {
-            $(this).attr('target', '_blank')
-        }
-    })
-}
-$.fn.hide = function() {
-    $(this).attr('hidden', true)
-    return $(this)
-}
-$.fn.show = function() {
-    $(this).removeAttr('hidden')
-    return $(this)
+		}
+		else {
+			$(this).attr('target', '_blank')
+		}
+	})
 }
 
-function reset() {
-    $('#jumbotron').hide()
-    $('.blog-posts-wrapper .panel').remove()
-}
 $(function() {
+	$('.admin').hide()
+	$('#logout').attr('href', $('#logout').attr('href')+'?redirect='+window.location.href)
 
-
-    reset()
-    var router = new Navigo()
-    // https://github.com/krasimir/navigo
-    // http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
-    // http://krasimirtsonev.com/blog/article/deep-dive-into-client-side-routing-navigo-pushstate-hash
-
-    router.on('/twit', function (params, query) {
-        reset()
-        $('#jumbotron').show().find('.blog-content').append($('#twitter').show())
-        $('.blog-blurb').append($('.twitter-follow-button'))
-        document.title = 'Will | Tweets'
-        $('[href="twit"]').parent().addClass('active')
-    })
-    router.on('/twit/:count', function (params, query) {
-        reset()
-        $('.twitter-timeline').data('tweet-limit', params.count)
-        $('#jumbotron').show().find('.blog-content').append($('#twitter').show())
-        $('.blog-blurb').append($('.twitter-follow-button'))
-        document.title = 'Will | Showing '+params.count+' tweet'+(params.count == 1 ? '' : 's')
-        $('[href="twit"]').parent().addClass('active')
-    })
-    router.on('/themes', function (params, query) {
-        reset()
-        $.post('bootswatch.3.json', function(d) {
-            $.each(d.themes, function(i, theme) {
-                theme.name = theme.name.capital()
-                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-                $article.find('.entry-title h1').html(theme.name)
-                $article.find('.entry-thumbnail img').attr('src', theme.thumbnail)
-                $article.find('.entry-thumbnail img').attr('theme', theme.name)
-                $article.find('.entry-thumbnail img').addClass('preview')
-                $article.find('.entry-summary').html(theme.description)
-                $article.find('a').attr('href', theme.preview)
-                $article.find('a').attr('target', '_blank')
-                $('.blog-posts-wrapper').append($article)
-            })
-            $('[href="themes"]').parent().addClass('active')
-            document.title = 'Will | Themes'
-        })
-    })
-    router.on('/blog/new', function (params, query) {
-        $('.jumbotron').attr('hidden', false)
-        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: 'shlergh'}))
-
-        // https://www.tinymce.com/docs/
-        tinymce.init({
-            selector: '#tinymce',
-            theme: 'modern',
-            plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
-            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
-            image_advtab: true,
-            templates: [
-                { title: 'Test template 1', content: 'Test 1' },
-                { title: 'Test template 2', content: 'Test 2' }
-            ],
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tinymce.com/css/codepen.min.css'
-            ]
-        });
+	if (admin) {
+		$('.admin').show()
+	}
 
 
 
+	var router = new Navigo()
 
-        $('.panel-body').css('padding', 0)
-        $('.blog-image, .blog-content').remove()
-        $('.blog-title, .blog-blurb').attr('contenteditable', true)
-        $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
+	// https://github.com/krasimir/navigo
+	// http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
+	// http://krasimirtsonev.com/blog/article/deep-dive-into-client-side-routing-navigo-pushstate-hash
 
+	router.on('/twit', function (params, query) {
+		$('.jumbotron').parent().load('pages/twitter.html')
+		document.title = 'Will | Tweets'
+		$('[href="twit"]').parent().addClass('active')
+	})
+	router.on('/twit/:count', function (params, query) {
+		$('.jumbotron').parent().load('pages/twitter.html')
+		$('.twitter-timeline').data('tweet-limit', params.count)
+		document.title = 'Will | Showing '+params.count+' tweet'+(params.count == 1 ? '' : 's')
+		$('[href="twit"]').parent().addClass('active')
+	})
+	router.on('/themes', function (params, query) {
+		if (!admin) {
+			window.location.href = 'home'
+		}
 
+		$('#jumbotron').hide()
+		$.post('bootswatch.3.json', function(d) {
+			$.each(d.themes, function(i, theme) {
+				theme.name = theme.name.capital()
+				var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+				$article.find('.entry-title h1').html(theme.name)
+				$article.find('.entry-thumbnail img').attr('src', theme.thumbnail)
+				$article.find('.entry-thumbnail img').attr('theme', theme.name)
+				$article.find('.entry-thumbnail img').addClass('preview')
+				$article.find('.entry-summary').html(theme.description)
+				$article.find('a').attr('href', theme.preview)
+				$article.find('a').attr('target', '_blank')
+				$('.blog-posts-wrapper').append($article)
+			})
+			$('[href="themes"]').parent().addClass('active')
+			document.title = 'Will | Themes'
+		})
+	}/*,
+	{
+		before: function (done, params) {
+			if(!admin) {
+				done(false)
+			}
+			// else {
+			// 	done()
+			// }
+		}
+	}*/)
+	router.on('/blog/new', function (params, query) {
+		if (!admin) {
+			window.location.href = 'blog'
+		}
 
+		$('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: ''}))
 
-        $('[href="blog"]').parent().addClass('active')
-
-        $('#newPost').css('display', 'none')
-        $('#submitPost').css('display', '')
-        $('#editPost').css('display', 'none')
-        $('#removePost').css('display', 'none')
-
-
-
-        document.title = 'Will | New Blog Post'
-    })
-    router.on('/blog/edit/:id', function (params, query) {
-        reset()
-        $('.jumbotron').attr('hidden', false)
-        $('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: ''}))
-
-        // https://www.tinymce.com/docs/
-        tinymce.init({
-            selector: '#tinymce',
-            theme: 'modern',
-            plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
-            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
-            image_advtab: true,
-            templates: [
-                { title: 'Test template 1', content: 'Test 1' },
-                { title: 'Test template 2', content: 'Test 2' }
-            ],
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tinymce.com/css/codepen.min.css'
-            ]
-        });
-
-        $.post('server.php', {mode: 'get', id: params.id}, function(entry) {
-            entry = JSON.parse(entry)
-            $('.entry').attr('hidden', false)
-            // $('.blog-id').html(entry.id)
-
-            $('.blog-title').html(entry.title)
-            $('.blog-blurb').html(entry.blurb)
-            $('.blog-content').html(entry.content)
-            $('.blog-created').attr('href', window.location.href)
-            $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
-            $('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
-
-            // tinyMCE.activeEditor.getContent()
-
-            // tinymce.activeEditor.setContent(entry.content)
-            tinymce.activeEditor.on('init', function(e) {
-                e.target.setContent(entry.content)
-            })
-
-            $('html, body').animate({scrollTop: 0}, 'slow')
-            document.title = 'Will | ' + entry.title
-        }, 'text')
-
-
-        $('.panel-body').css('padding', 0)
-        $('.blog-image, .blog-content').remove()
-        $('.blog-title, .blog-blurb').attr('contenteditable', true)
-        $('.blog-title, .blog-blurb').css('border', '1px dashed gray')
-        $('[href="blog"]').parent().addClass('active')
-
-        $('#blog-controls').css('display', 'block')
-
-        $('#newPost').css('display', 'none')
-        $('#submitPost').css('display', '')
-        $('#editPost').css('display', 'none')
-        $('#removePost').css('display', '')
-
-
-
-        document.title = 'Will | Edit Blog Post'
-    })
-    router.on('/blog/:id', function (params, query) {
-        reset()
-        $.post('server.php', {mode: 'get', id: params.id}, function(entry) {
-            entry = JSON.parse(entry)
-            $('.entry').attr('hidden', false)
-            $('.blog-title').html(entry.title)
-            $('.blog-id').html(entry.id)
-            $('.blog-created').attr('href', window.location.href)
-            $('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
-            $('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
-            $('.blog-image').attr('src', entry.image)
-            $('.blog-blurb').html(entry.blurb)
-            $('.blog-content').html(entry.content)
-            $('html, body').animate({scrollTop: 0}, 'slow')
-            document.title = 'Will | ' + entry.title
-        }, 'text')
-
-        $('#blog-controls').css('display', 'block')
-
-        $('#newPost').css('display', 'none')
-        $('#submitPost').css('display', 'none')
-        $('#editPost').css('display', '')
-        $('#removePost').css('display', '')
-
-        $('#editPost').attr('href', $('#editPost').attr('href', )+'/'+params.id)
-
-
-        // $.post('server.php', {mode: 'all'}, function(posts) {
-        //     posts.forEach(function(entry) {
-        //         entry = entry[0]
-        //         var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-        //         $article.find('.entry-title h1').html(entry.title)
-        //         $article.find('.entry-summary').html(entry.blurb)
-        //         $article.find('a').attr('href', 'blog/'+entry.id)
-        //         $('.blog-posts-wrapper').append($article)
-        //     })
-        //     $('.jumbotron').attr('hidden', false)
-        //     externalize()
-        // }, 'json')
-
-        $('.jumbotron').attr('hidden', false)
-        externalize()
-    })
-    router.on('/blog', function (params, query) {
-        reset()
-        $.post('server.php', {mode: 'all'}, function(posts) {
-            posts.forEach(function(entry) {
-                entry = entry[0]
-                var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
-                $article.find('.entry-title h1').html(entry.title)
-                if (entry.image) {
-                    $article.find('.entry-thumbnail img').attr('src', entry.image)
-                }
-                else {
-                    $article.find('.entry-thumbnail img').remove()
-                }
-                $article.find('.entry-summary').html(entry.blurb)
-                $article.find('a').attr('href', 'blog/'+entry.id)
-                $('.blog-posts-wrapper').append($article)
-            })
-            $('[href="blog"]').parent().addClass('active')
-
-            $('#newPost').css('display', '')
-            $('#submitPost').css('display', 'none')
-            $('#editPost').css('display', 'none')
-            $('#removePost').css('display', 'none')
-
-            document.title = 'Will | Blog'
-        }, 'json')
-    })
-    router.on('/about', function(query) {
-        reset()
-        $('.jumbotron').removeAttr('hidden')
-        $('[href="about"]').parent().addClass('active')
-        document.title = 'Will | About'
-    })
-    router.on(function(query) {
-        reset()
-        $('.jumbotron').removeAttr('hidden')
-        $('[href=""]').parent().addClass('active')
-        document.title = 'Will | Home'
-    })
-
-    router.resolve()
+		// https://www.tinymce.com/docs/
+		tinymce.init({
+			selector: '#tinymce',
+			theme: 'modern',
+			plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
+			toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
+			image_advtab: true,
+			templates: [
+				{ title: 'Test template 1', content: 'Test 1' },
+				{ title: 'Test template 2', content: 'Test 2' }
+			],
+			content_css: [
+				'//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+				'//www.tinymce.com/css/codepen.min.css'
+			]
+		})
 
 
 
 
+		$('.panel-body').css('padding', 0)
+		$('.blog-image, .blog-content').remove()
+		$('.blog-title, .blog-blurb').attr('contenteditable', true)
+		$('.blog-title, .blog-blurb').css('border', '1px dashed gray')
 
-    var defaultTheme = localStorage.theme || 'Cyborg'
-    $.post('bootswatch.3.json', function(d) {
-        $.each(d.themes, function(i, theme) {
-            theme.name = theme.name.capital()
-            $('#theme').append($('<option></option>', {
-                text: theme.name,
-                val: theme.css,
-                selected: (theme.name === defaultTheme ? true : false),
-                shade: theme.shade,
-            }))
-            if (theme.name === defaultTheme) {
-                $('#bootstrap').attr('href', theme.css)
-            }
-        })
-    })
+
+
+
+		$('#new-post').hide()
+		$('#submit-post').show()
+		$('#edit-post').hide()
+		$('#remove-post').hide()
+
+
+
+		document.title = 'Will | New Blog Post'
+	}/*,
+	{
+		before: function (done, params) {
+			if(!admin) {
+				done(false)
+			}
+			// else {
+			// 	done()
+			// }
+		}
+	}*/)
+	router.on('/blog/edit/:id', function (params, query) {
+		if (!admin) {
+			window.location.href = 'blog/'+params.id
+		}
+
+		$('[href="blog"]').parent().addClass('active')
+		$('.entry-summary').append($('<textarea></textarea>', {id: 'tinymce', val: ''}))
+
+		// https://www.tinymce.com/docs/
+		tinymce.init({
+			selector: '#tinymce',
+			theme: 'modern',
+			plugins: 'advlist anchor autolink autoresize charmap code codesample colorpicker contextmenu directionality emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking pagebreak paste preview print save searchreplace table template textcolor textpattern toc visualblocks visualchars wordcount',
+			toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample help',
+			image_advtab: true,
+			templates: [
+				{ title: 'Test template 1', content: 'Test 1' },
+				{ title: 'Test template 2', content: 'Test 2' }
+			],
+			content_css: [
+				'//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+				'//www.tinymce.com/css/codepen.min.css'
+			]
+		})
+
+		$.post('server.php', {mode: 'get', id: params.id}, function(entry) {
+			entry = JSON.parse(entry)
+			$('.blog-title').html(entry.title)
+			$('.blog-blurb').html(entry.blurb)
+			$('.blog-content').html(entry.content)
+			$('.blog-created').attr('href', window.location.href)
+			$('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
+			$('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
+			tinymce.activeEditor.on('init', function(e) {
+				e.target.setContent(entry.content)
+			})
+			$('html, body').animate({scrollTop: 0}, 'slow')
+			document.title = 'Will | ' + entry.title
+		}, 'text')
+
+
+		$('.panel-body').css('padding', 0)
+		$('.blog-image, .blog-content').remove()
+		$('.blog-title, .blog-blurb').attr('contenteditable', true)
+		$('.blog-title, .blog-blurb').css('border', '1px dashed gray')
+
+
+		$('#new-post').hide()
+		$('#submit-post').show()
+		$('#edit-post').hide()
+		$('#remove-post').hide()
+
+
+
+		document.title = 'Will | Edit Blog Post'
+	}/*,
+	{
+		before: function (done, params) {
+			if(!admin) {
+				done(false)
+			}
+			// else {
+			// 	done()
+			// }
+		}
+	}*/)
+	router.on('/blog/:id', function (params, query) {
+		$('[href="blog"]').parent().addClass('active')
+		$.post('server.php', {mode: 'get', id: params.id}, function(entry) {
+			entry = JSON.parse(entry)
+			$('.blog-title').html(entry.title)
+			$('.blog-id').html(entry.id)
+			$('.blog-created').attr('href', window.location.href)
+			if (entry.created) {
+				$('.blog-created').parent().show()
+				$('.blog-created').html(moment(entry.created).format('MMMM Do, YYYY — HH:MM'))
+			}
+			if (entry.modified) {
+				$('.blog-modified').parent().show()
+				$('.blog-modified').html(moment(entry.modified).format('MMMM Do, YYYY — HH:MM'))
+			}
+			$('.blog-image').attr('src', entry.image)
+			$('.blog-blurb').html(entry.blurb)
+			$('.blog-content').html(entry.content)
+			$('html, body').animate({scrollTop: 0}, 'slow')
+			document.title = 'Will | ' + entry.title
+		}, 'text')
+
+		$('#new-post').hide()
+		$('#submit-post').hide()
+		$('#edit-post').show()
+		$('#remove-post').show()
+
+		$('#edit-post').attr('href', $('#edit-post').attr('href', )+'/'+params.id)
+
+
+
+		externalize()
+	})
+	router.on('/blog', function (params, query) {
+		$('#jumbotron').hide()
+		$('[href="blog"]').parent().addClass('active')
+		$.post('server.php', {mode: 'all'}, function(posts) {
+			posts.forEach(function(entry) {
+				entry = entry[0]
+				var $article = $('#template').clone().removeAttr('id').removeAttr('hidden')
+				$article.find('.entry-title h1').html(entry.title)
+				if (entry.image) {
+					$article.find('.entry-thumbnail img').attr('src', entry.image)
+				}
+				else {
+					$article.find('.entry-thumbnail img').remove()
+				}
+				$article.find('.entry-summary').html(entry.blurb)
+				$article.find('a').attr('href', 'blog/'+entry.id)
+				$('.blog-posts-wrapper').append($article)
+			})
+
+			$('#new-post').show()
+			$('#submit-post').hide()
+			$('#edit-post').hide()
+			$('#remove-post').hide()
+
+			document.title = 'Will | Blog'
+		}, 'json')
+	})
+	router.on('/logout', function(params, query) {
+		// if (!admin) return
+		localStorage.removeItem('admin')
+		window.location.href = qs('redirect')
+	})
+	router.on('/about', function(query) {
+		$('[href="about"]').parent().addClass('active')
+
+		$('#new-post').hide()
+		$('#submit-post').hide()
+		$('#edit-post').hide()
+		$('#remove-post').hide()
+
+		document.title = 'Will | About'
+	})
+	router.notFound(function() {
+		window.location.href = 'home'
+	})
+	router.on(function(query) {
+		$('[href=""]').parent().addClass('active')
+
+		$('#new-post').hide()
+		$('#submit-post').hide()
+		$('#edit-post').hide()
+		$('#remove-post').hide()
+
+
+		document.title = 'Will | Home'
+	},
+	{
+		before: function (done, params) {
+			// doing some async operation
+		},
+		after: function (params) {
+			// after resolving
+		},
+		leave: function (params) {
+			// when you are going out of the that route
+		}
+	})
+
+	router.resolve()
+
+
+
+
+
+	var defaultTheme = localStorage.theme || 'Cyborg'
+	$.post('bootswatch.3.json', function(d) {
+		$.each(d.themes, function(i, theme) {
+			theme.name = theme.name.capital()
+			$('#theme').append($('<option></option>', {
+				text: theme.name,
+				val: theme.css,
+				selected: (theme.name === defaultTheme ? true : false),
+				shade: theme.shade,
+			}))
+			if (theme.name === defaultTheme) {
+				$('#bootstrap').attr('href', theme.css)
+			}
+		})
+	})
 
 })
 
 </script>
 <style>
 ::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 body {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 h1 {
-    margin: auto !important;
-    text-align: center;
+	margin: auto !important;
+	text-align: center;
 }
 .site {
-    width: 70%;
-    margin: auto;
+	width: 70%;
+	margin: auto;
 }
 .jumbotron {
-    padding-left: 60px;
-    padding-right: 60px;
+	padding-left: 60px;
+	padding-right: 60px;
 }
 .blog-posts-wrapper {
-    display: flex;
-    flex-flow: row wrap;
+	display: flex;
+	flex-flow: row wrap;
 }
 .blog-posts .panel {
-    /*float: left;*/
-    width: 33.33%;
+	/*float: left;*/
+	width: 33.33%;
 }
 .panel img {
-    border-radius: 20px;
-    padding: 10px 15px;
-    width: 100%;
+	border-radius: 20px;
+	padding: 10px 15px;
+	width: 100%;
 }
 footer {
-    clear: both;
+	clear: both;
 }
 footer nav {
-    float: right;
-    text-align: right;
+	float: right;
+	text-align: right;
 }
 footer li {
-    display: inline-block;
-    margin: 0 8px 0 0;
-    font-weight: bold;
-    text-transform: uppercase;
+	display: inline-block;
+	margin: 0 8px 0 0;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 .mce-branding-powered-by {
-    display: none !important;
-}
-#blog-controls {
-    display: none;
+	display: none !important;
 }
 .panel-default {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 .panel-body {
-    flex-grow: 1;
+	flex-grow: 1;
 }
-#template {
-    display: none;
+[hidden] {
+	display: none;
+	visibility: hidden;
 }
 </style>
 </head>
 <body>
 <div class="site">
-    <header>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="https://www.fallenreaper.com/">Will</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                    <!-- data-navigo: for now, don't use this. elements aren't shown and hidden correctly yet -->
-                        <li><a href="">Home</a></li>
-                        <li><a href="about">About</a></li>
-                        <li><a href="blog">Blog</a></li>
-                        <li><a href="themes">Themes</a></li>
-                        <li><a href="twit">Tweets</a></li>
-                    </ul>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <select id='theme' class="form-control"></select>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Phone: 412 555 1234</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <content>
-        <div id='jumbotron' class="jumbotron" hidden>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class='blog-title'></h1>
-                    <p class='blog-blurb'></p>
-                </div>
-                <div class="panel-body entry-summary">
-                    <img class='blog-image' />
-                    <p class='blog-content'></p>
-                </div>
-                <div class="panel-footer">
-                    <div class='timestamp' >Created on <a href='' class='blog-created'></a></div>
-                    <div class='timestamp' >Modified on <a href='' class='blog-modified'></a></div>
-                </div>
-            </div>
-            <!-- <hr> -->
-            <!-- <div class='blog-content'></div> -->
-            <!-- <p><a class="btn btn-primary btn-lg">Learn more</a></p> -->
-        </div>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="https://www.fallenreaper.com/">Will</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+					<!-- data-navigo: for now, don't use this. elements aren't shown and hidden correctly yet -->
+						<li><a href="">Home</a></li>
+						<li><a href="about">About</a></li>
+						<li><a href="blog">Blog</a></li>
+						<li><a href="themes" class='admin'>Themes</a></li>
+						<li><a href="twit">Tweets</a></li>
+					</ul>
+					<form class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search">
+						</div>
+						<select id='theme' class="form-control admin"></select>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Phone: 412 555 1234</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<content>
+		<div id='jumbotron' class="jumbotron">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class='blog-title'></h1>
+					<p class='blog-blurb'></p>
+				</div>
+				<div class="panel-body entry-summary">
+					<img class='blog-image' />
+					<p class='blog-content'></p>
+				</div>
+				<div class="panel-footer">
+					<div class='timestamp' style='display: none;'>Created on <a href='' class='blog-created'></a></div>
+					<div class='timestamp' style='display: none;'>Modified on <a href='' class='blog-modified'></a></div>
+				</div>
+			</div>
+			<!-- <hr> -->
+			<!-- <div class='blog-content'></div> -->
+			<!-- <p><a class="btn btn-primary btn-lg">Learn more</a></p> -->
+		</div>
 
-        <div class="blog-posts">
-            <div id='blog-controls' style='width: 100%;'>
-                <a id='newPost'     hidden style='width: 100%;'  href='blog/new'    class='btn btn-success'><i class='fa fa-plus'></i> New Post</a>
-                <a id='submitPost'  hidden style='width: 100%;'  href='blog'        class='btn btn-default'><i class='fa fa-check'></i> Submit Post</a>
-                <a id='editPost'    hidden style='width: 100%;'  href='blog/edit'   class='btn btn-warning'><i class='fa fa-edit'></i> Edit Post</a>
-                <a id='removePost'  hidden style='width: 100%;'  href='blog'        class='btn btn-danger' ><i class='fa fa-minus'></i> Remove Post</a>
-            </div>
-            <div id='template' class="panel panel-default" hidden>
-                <div class="panel-heading entry-title"><h1></h1></div>
-                <div class="panel-body entry-summary"></div>
-                <a class="entry-thumbnail" href=""><img src=""></a>
-                <div class="panel-footer"><a class="btn btn-primary more btn-lg btn-block" href="#">Read more</a></div>
-            </div>
-            <div class="blog-posts-wrapper clear">
+		<div class="blog-posts">
+
+			<div id='template' class="panel panel-default" hidden>
+				<div class="panel-heading entry-title"><h1></h1></div>
+				<div class="panel-body entry-summary"></div>
+				<a class="entry-thumbnail" href=""><img src=""></a>
+				<div class="panel-footer"><a class="btn btn-primary more btn-lg btn-block" href="#">Read more</a></div>
+			</div>
+			<div class="blog-posts-wrapper clear">
 
 
-            </div>
-        </div>
-        <div id='twitter' hidden>
-            <!-- https://dev.twitter.com/web/embedded-timelines -->
-            <!-- <a class="twitter-timeline" href="https://twitter.com/Fallenreaper">Tweets by Fallenreaper</a> -->
-            <a class="twitter-follow-button"
-            data-size="large"
-            href="https://twitter.com/FallenReaper">
-            Follow @FallenReaper
-            </a>
-            <a class="twitter-timeline"
-            href="https://twitter.com/Fallenreaper"
-            data-tweet-limit="3"
-            data-chrome='noheader nofooter noborders noscrollbar transparent'
-            data-theme='dark'
-            data-link-color='#008800'
-            data-border-color='#008800'
-            data-screen-name="FallenReaper"
-            >Tweets by Fallenreaper</a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
-
-    </content>
-    <footer class="well">
-        <nav>
-            <ul>
-                <li><a href="https://www.fallenreaper.com/blog/">Blog</a></li>
-                <li><a href="https://www.fallenreaper.com/about-us/">About us</a></li>
-                <li><a href="https://www.fallenreaper.com/contact-us/">Contact us</a></li>
-            </ul>
-        </nav>
-        <div>
-            <a href="#">&copy; 2017 A Fallen Reaper Site</a>
-        </div>
-    </footer>
+			</div>
+		</div>
+	</content>
+	<div class='admin' style='width: 100%;'>
+		<a id='new-post'			style='width: 100%;'	href='blog/new'		class='btn btn-success'><i class='fa fa-plus'></i> New Post</a>
+		<a id='submit-post'	 style='width: 100%;'	href='blog'				class='btn btn-primary'><i class='fa fa-check'></i> Submit Post</a>
+		<a id='edit-post'		 style='width: 100%;'	href='blog/edit'	 class='btn btn-warning'><i class='fa fa-edit'></i> Edit Post</a>
+		<a id='remove-post'	 style='width: 100%;'	href='blog'				class='btn btn-danger' ><i class='fa fa-minus'></i> Remove Post</a>
+	</div>
+	<br>
+	<footer class="well">
+		<nav>
+			<ul>
+				<li><a href="logout" class='admin text-danger' style='text-transform: none;' id='logout'>Logged in as Admin</a></li>
+				<li><a href="https://www.fallenreaper.com/blog/">Blog</a></li>
+				<li><a href="https://www.fallenreaper.com/about-us/">About us</a></li>
+				<li><a href="https://www.fallenreaper.com/contact-us/">Contact us</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a href="#">&copy; 2017 A Fallen Reaper Site</a>
+		</div>
+	</footer>
 </div>
 </body>
 </html>
