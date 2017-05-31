@@ -394,7 +394,7 @@ $(function() {
 		document.title = 'Will | About'
 	})
 	router.notFound(function() {
-		window.location.href = 'home'
+		window.location.href = ''
 	})
 	router.on(function(query) {
 		$('[href=""]').parent().addClass('active')
@@ -406,17 +406,6 @@ $(function() {
 
 
 		document.title = 'Will | Home'
-	},
-	{
-		before: function (done, params) {
-			// doing some async operation
-		},
-		after: function (params) {
-			// after resolving
-		},
-		leave: function (params) {
-			// when you are going out of the that route
-		}
 	})
 
 	router.resolve()
